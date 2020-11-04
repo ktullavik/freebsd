@@ -203,7 +203,6 @@ SUBDIR.${MK_EE}+=	ee
 SUBDIR.${MK_FILE}+=	file
 SUBDIR.${MK_FINGER}+=	finger
 SUBDIR.${MK_FTP}+=	ftp
-SUBDIR.${MK_GAMES}+=	factor
 SUBDIR.${MK_GAMES}+=	fortune
 SUBDIR.${MK_GAMES}+=	grdc
 SUBDIR.${MK_GAMES}+=	morse
