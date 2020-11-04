@@ -205,7 +205,6 @@ SUBDIR.${MK_FINGER}+=	finger
 SUBDIR.${MK_FTP}+=	ftp
 SUBDIR.${MK_GAMES}+=	fortune
 SUBDIR.${MK_GAMES}+=	grdc
-SUBDIR.${MK_GAMES}+=	morse
 SUBDIR.${MK_GAMES}+=	number
 SUBDIR.${MK_GAMES}+=	pom
 SUBDIR.${MK_GAMES}+=	primes
