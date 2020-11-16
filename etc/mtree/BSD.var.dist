@@ -52,8 +52,6 @@
         ..
         ports
         ..
-        portsnap
-        ..
         zfsd
             cases
             ..
