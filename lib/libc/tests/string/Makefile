@@ -29,8 +29,6 @@ NETBSD_ATF_TESTS_C+=	swab_test
 
 SRCS.strerror2_test=	strerror_test.c
 
-.include "../Makefile.netbsd-tests"
-
 LIBADD.memchr_test+=	md
 LIBADD.memcpy_test+=	md
 

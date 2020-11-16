@@ -15,6 +15,4 @@ ATF_TESTS_SH_SED_db_test=	-e 's,/bin/csh,/bin/cat,g'
 
 CFLAGS+=	-I${SRCTOP}/lib/libc/db/btree
 
-.include "../Makefile.netbsd-tests"
-
 .include <bsd.test.mk>

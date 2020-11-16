@@ -46,8 +46,6 @@ NETBSD_ATF_TESTS_C+=	system_test
 #ATF_TESTS_SH=	atexit_test
 NETBSD_ATF_TESTS_SH=	getopt_test
 
-.include "../Makefile.netbsd-tests"
-
 BINDIR=		${TESTSDIR}
 
 # TODO: see comment above

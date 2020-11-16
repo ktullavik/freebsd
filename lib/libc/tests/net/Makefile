@@ -31,8 +31,6 @@ CLEANFILES+=	aton_ether_subr.c
 aton_ether_subr.c: gen_ether_subr ${SRCTOP}/sys/net/if_ethersubr.c
 	${__MAKE_SHELL} ${.ALLSRC} ${.TARGET}
 
-.include "../Makefile.netbsd-tests"
-
 # TODO: the testcases needs to be ported to FreeBSD
 #TESTS_SUBDIRS=	getaddrinfo
 ${PACKAGE}FILES+=	hosts

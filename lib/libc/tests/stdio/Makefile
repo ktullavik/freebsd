@@ -39,6 +39,4 @@ PROG_OVERRIDE_VARS+=	NO_WFORMAT
 NO_WFORMAT.scanfloat_test=
 .endif
 
-.include "../Makefile.netbsd-tests"
-
 .include <bsd.test.mk>

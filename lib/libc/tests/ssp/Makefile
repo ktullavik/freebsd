@@ -58,6 +58,4 @@ PROGS+=		h_strncpy
 PROGS+=		h_vsnprintf
 PROGS+=		h_vsprintf
 
-.include "../Makefile.netbsd-tests"
-
 .include <bsd.test.mk>

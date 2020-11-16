@@ -73,8 +73,6 @@ NETBSD_ATF_TESTS_C+=		write_test
 LIBADD.getpid_test+=		pthread
 LIBADD.timer_create_test+=	rt
 
-.include "../Makefile.netbsd-tests"
-
 SRCS.mlock_test+=		mlock_helper.c
 SRCS.setrlimit_test+=		mlock_helper.c
 

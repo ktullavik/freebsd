@@ -71,8 +71,6 @@ NETBSD_ATF_TESTS_C+=	time_test
 NETBSD_ATF_TESTS_C+=	ttyname_test
 NETBSD_ATF_TESTS_C+=	vis_test
 
-.include "../Makefile.netbsd-tests"
-
 CFLAGS.getentropy_test+=	-I${SRCTOP}/include
 LIBADD.getentropy_test+=	c
 LIBADD.humanize_number_test+=	util

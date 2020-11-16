@@ -7,6 +7,4 @@ LIBADD.t_threadjmp+=	pthread
 
 WARNS?=	4
 
-.include "../Makefile.netbsd-tests"
-
 .include <bsd.test.mk>

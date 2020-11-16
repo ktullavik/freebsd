@@ -34,6 +34,5 @@ LIBADD.sha2_test+=	crypto
 
 CFLAGS.h_hash+=		-I${SRCTOP}/lib/libnetbsd
 
-.include "../Makefile.netbsd-tests"
 
 .include <bsd.test.mk>

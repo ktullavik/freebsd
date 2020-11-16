@@ -20,6 +20,4 @@ CFLAGS+=	-I${.OBJDIR}
 
 LIBADD+=	rpcsvc util
 
-.include "../Makefile.netbsd-tests"
-
 .include <bsd.test.mk>
