@@ -52,7 +52,6 @@ MAN=	acct.5 \
 	periodic.conf.5 \
 	phones.5 \
 	portindex.5 \
-	portsnap.conf.5 \
 	procfs.5 \
 	protocols.5 \
 	quota.user.5 \
@@ -92,10 +91,6 @@ MAN+=	autofs.5
 MAN+=	bluetooth.device.conf.5 \
 	bluetooth.hosts.5 \
 	bluetooth.protocols.5
-.endif
-
-.if ${MK_FREEBSD_UPDATE} != "no"
-MAN+=	freebsd-update.conf.5
 .endif
 
 .if ${MK_HESIOD} != "no"
