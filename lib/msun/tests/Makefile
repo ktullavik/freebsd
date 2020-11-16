@@ -100,6 +100,4 @@ CFLAGS+=	-DLDBL_PREC=${LDBL_PREC}
 
 CFLAGS.fe_round_test+=	-D__HAVE_FENV
 
-.include <netbsd-tests.test.mk>
-
 .include <bsd.test.mk>
