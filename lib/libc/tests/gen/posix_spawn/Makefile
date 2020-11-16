@@ -17,8 +17,6 @@ SCRIPTS+=	h_zero
 
 CLEANFILES+=	h_nonexec
 
-.include "../../Makefile.netbsd-tests"
-
 # The dd status=none option is non-standard. Only use it when this test succeeds
 # rather than require dd to be a bootstrap tool.
 DD_NOSTATUS!=(dd status=none count=0 2> /dev/null && echo status=none) || true
