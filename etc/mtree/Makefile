@@ -9,7 +9,6 @@ FILES=	\
 	BSD.root.dist \
 	${_BSD.lib32.dist} \
 	${_BSD.libsoft.dist} \
-	${_BSD.sendmail.dist} \
 	${_BSD.tests.dist} \
 	BSD.usr.dist \
 	BSD.var.dist
@@ -19,9 +18,6 @@ _BSD.lib32.dist=	BSD.lib32.dist
 .endif
 .if ${MK_LIBSOFT} != "no"
 _BSD.libsoft.dist=	BSD.libsoft.dist
-.endif
-.if ${MK_SENDMAIL} != "no"
-_BSD.sendmail.dist=	BSD.sendmail.dist
 .endif
 .if ${MK_TESTS} != "no"
 _BSD.tests.dist=	BSD.tests.dist

@@ -156,8 +156,6 @@
             ru
             ..
         ..
-        sendmail
-        ..
         sm.bin
         ..
     ..
@@ -1203,8 +1201,6 @@
             ..
         ..
         security
-        ..
-        sendmail
         ..
         skel
         ..

@@ -11,17 +11,9 @@ NLS_ALIASES=	POSIX C \
 # No need as it is empty and just causes rebuilds since this file does so much.
 UPDATE_DEPENDFILE=	no
 
-.if ${MK_SENDMAIL} != "no"
-SUBDIR+=sendmail
-.endif
-
 # NB: keep these sorted by MK_* knobs
 
 ETCMAIL=aliases
-.if ${MK_SENDMAIL} != "no"
-ETCMAIL+=Makefile README access.sample virtusertable.sample \
-	mailertable.sample
-.endif
 
 # Special top level files for FreeBSD
 FREEBSD=COPYRIGHT
