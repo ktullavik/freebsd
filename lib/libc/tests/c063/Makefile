@@ -19,6 +19,4 @@ NETBSD_ATF_TESTS_C+=	utimensat_test
 
 CFLAGS+= -D_INCOMPLETE_XOPEN_C063
 
-.include "../Makefile.netbsd-tests"
-
 .include <bsd.test.mk>
