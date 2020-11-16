@@ -16,6 +16,4 @@ NETBSD_ATF_TESTS_C+=	backtrace_test
 
 LIBADD.backtrace_test+=	execinfo
 
-.include <netbsd-tests.test.mk>
-
 .include <bsd.test.mk>
