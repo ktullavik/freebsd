@@ -15,6 +15,4 @@ WITHOUT_PIC=
 
 MAN=
 
-.include "../Makefile.netbsd-tests"
-
 .include <bsd.lib.mk>
