@@ -134,7 +134,6 @@ SUBDIR.${MK_EFI}+=	efivar efidp efibootmgr
 SUBDIR.${MK_EFI}+=	uefisign
 .endif
 SUBDIR.${MK_FMTREE}+=	fmtree
-SUBDIR.${MK_FREEBSD_UPDATE}+=	freebsd-update
 SUBDIR.${MK_GSSAPI}+=	gssd
 SUBDIR.${MK_GPIO}+=	gpioctl
 SUBDIR.${MK_INET6}+=	ip6addrctl
