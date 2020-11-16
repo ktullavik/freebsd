@@ -11,6 +11,4 @@ MAN=
 LIBDIR=		${TESTSBASE}/lib/libc/tls
 SHLIB_MAJOR=	1
 
-.include "../../Makefile.netbsd-tests"
-
 .include <bsd.lib.mk>
