@@ -725,7 +725,7 @@ BSARGS= 	DESTDIR= \
 		BOOTSTRAPPING=${BOOTSTRAPPING_OSRELDATE} \
 		BWPHASE=${.TARGET:C,^_,,} \
 		SSP_CFLAGS= \
-		MK_HTML=no NO_LINT=yes MK_MAN=no MK_MAN_UTILS=yes \
+		NO_LINT=yes MK_MAN=no MK_MAN_UTILS=yes \
 		-DNO_PIC MK_PROFILE=no -DNO_SHARED \
 		-DNO_CPU_CFLAGS MK_WARNS=no MK_CTF=no \
 		MK_CLANG_EXTRAS=no MK_CLANG_FORMAT=no MK_CLANG_FULL=no \
@@ -774,7 +774,7 @@ KTMAKE=		\
 		MAKEOBJDIRPREFIX= \
 		BOOTSTRAPPING=${BOOTSTRAPPING_OSRELDATE} \
 		SSP_CFLAGS= \
-		MK_HTML=no -DNO_LINT MK_MAN=no \
+		-DNO_LINT MK_MAN=no \
 		-DNO_PIC MK_PROFILE=no -DNO_SHARED \
 		-DNO_CPU_CFLAGS MK_RETPOLINE=no MK_WARNS=no MK_CTF=no
 
@@ -1121,7 +1121,7 @@ _libraries:
 	@echo ">>> stage 4.2: building libraries"
 	@echo "--------------------------------------------------------------"
 	${_+_}cd ${.CURDIR}; \
-	    ${WMAKE} -DNO_FSCHG MK_HTML=no -DNO_LINT MK_MAN=no \
+	    ${WMAKE} -DNO_FSCHG -DNO_LINT MK_MAN=no \
 	    MK_PROFILE=no MK_TESTS=no MK_TESTS_SUPPORT=${MK_TESTS_SUPPORT} \
 	    libraries
 everything: .PHONY
@@ -2715,7 +2715,6 @@ NXBMAKEARGS+= \
 	MK_CTF=no \
 	MK_DEBUG_FILES=no \
 	MK_GDB=no \
-	MK_HTML=no \
 	MK_LLDB=no \
 	MK_MAN=no \
 	MK_MAN_UTILS=yes \
@@ -3339,7 +3338,7 @@ XDEV_CPUTYPE?=${CPUTYPE}
 XDEV_CPUTYPE?=${TARGET_CPUTYPE}
 .endif
 
-NOFUN=-DNO_FSCHG MK_HTML=no -DNO_LINT \
+NOFUN=-DNO_FSCHG -DNO_LINT \
 	MK_MAN=no MK_NLS=no MK_PROFILE=no \
 	MK_KERBEROS=no MK_RESCUE=no MK_TESTS=no MK_WARNS=no \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
