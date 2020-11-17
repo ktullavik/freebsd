@@ -8,7 +8,6 @@ SUBDIR=	alias \
 	asa \
 	awk \
 	backlight \
-	banner \
 	basename \
 	brandelf \
 	bsdcat \
