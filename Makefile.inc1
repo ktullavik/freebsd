@@ -2176,10 +2176,6 @@ BOOTSTRAPPING_OSRELDATE:=	0
 _config=usr.sbin/config lib/libnv lib/libsbuf
 ${_bt}-usr.sbin/config: ${_bt}-lib/libnv ${_bt}-lib/libsbuf
 
-.if ${MK_GAMES} != "no"
-_strfile=	usr.bin/fortune/strfile
-.endif
-
 .if ${MK_VT} != "no"
 _vtfontcvt=	usr.bin/vtfontcvt
 .endif
@@ -2926,9 +2922,7 @@ lib/liblzma__L: lib/libmd__L lib/libthr__L
 lib/libzstd__L: lib/libthr__L
 
 _generic_libs=	${_cddl_lib} gnu/lib ${_kerberos5_lib} lib ${_secure_lib}
-.if ${MK_IPFILTER} != "no"
-_generic_libs+=	sbin/ipf/libipf
-.endif
+
 .for _DIR in ${LOCAL_LIB_DIRS}
 .if ${_DIR} == ".WAIT"  || (empty(_generic_libs:M${_DIR}) && exists(${.CURDIR}/${_DIR}/Makefile))
 _generic_libs+= ${_DIR}
