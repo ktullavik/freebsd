@@ -12,7 +12,4 @@ PROG=	cat
 CFLAGS+=-DBOOTSTRAP_CAT
 .endif
 
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
-
 .include <bsd.prog.mk>
