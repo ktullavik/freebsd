@@ -105,10 +105,6 @@ SE_FLUA=	libjail.lua
 SE_DIRS+=	indent
 SE_INDENT=	indent.pro
 
-.if ${MK_IPFILTER} != "no"
-SUBDIR+=	ipfilter
-.endif
-
 SE_DIRS+=	ipfw
 SE_IPFW=	change_rules.sh
 
@@ -211,21 +207,6 @@ SE_PERFMON= \
 	Makefile \
 	README \
 	perfmon.c \
-
-.if ${MK_PF} != "no"
-SE_DIRS+=	pf
-SE_PF= \
-	ackpri \
-	faq-example1 \
-	faq-example2 \
-	faq-example3 \
-	pf.conf \
-	queue1 \
-	queue2 \
-	queue3 \
-	queue4 \
-	spamd
-.endif
 
 SE_DIRS+=	ppi
 SE_PPI= \

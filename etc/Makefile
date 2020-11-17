@@ -56,9 +56,6 @@ distribution:
 		../var/unbound ${DESTDIR}/etc/unbound; \
 	fi
 .endif
-.if ${MK_SENDMAIL} != "no"
-	${_+_}cd ${.CURDIR}/sendmail; ${MAKE} distribution
-.endif
 .if ${MK_KERBEROS} != "no"
 	cd ${.CURDIR}/root; \
 	    ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
@@ -97,9 +94,6 @@ MTREES+=	mtree/BSD.libsoft.dist		/usr/lib/debug/usr
 .if ${MK_TESTS} != "no"
 MTREES+=	mtree/BSD.tests.dist		${TESTSBASE}
 MTREES+=	mtree/BSD.tests.dist		/usr/lib/debug/${TESTSBASE}
-.endif
-.if ${MK_SENDMAIL} != "no"
-MTREES+=	mtree/BSD.sendmail.dist		/
 .endif
 .for mtree in ${LOCAL_MTREE}
 MTREES+=	../${mtree}			/

@@ -18,16 +18,8 @@ CONFS+=		lpr.conf
 CONFS+=		opensm.conf
 .endif
 
-.if ${MK_PF} != "no"
-CONFS+=		pf.conf
-.endif
-
 .if ${MK_PPP} != "no"
 CONFS+=		ppp.conf
-.endif
-
-.if ${MK_SENDMAIL} != "no"
-CONFS+=		sendmail.conf
 .endif
 
 .include <bsd.prog.mk>

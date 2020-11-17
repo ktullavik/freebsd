@@ -49,10 +49,6 @@ CFLAGS+=-DINET6
 CFLAGS+=-DSDP
 .endif
 
-.if ${MK_PF} != "no"
-CFLAGS+=-DPF
-.endif
-
 BINGRP=	kmem
 BINMODE=2555
 LIBADD=	kvm memstat xo util

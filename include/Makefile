@@ -194,16 +194,6 @@ copies: .PHONY .META
 	cd ${SRCTOP}/sys/fs/cd9660/; \
 	${INSTALL} -C ${TAG_ARGS} -o ${BINOWN} -g ${BINGRP} -m 444 *.h \
 	    ${SDESTDIR}${INCLUDEDIR}/isofs/cd9660
-.if ${MK_IPFILTER} != "no"
-	cd ${SRCTOP}/sys/contrib/ipfilter/netinet; \
-	${INSTALL} -C ${TAG_ARGS} -o ${BINOWN} -g ${BINGRP} -m 444 *.h \
-	    ${SDESTDIR}${INCLUDEDIR}/netinet
-.endif
-.if ${MK_PF} != "no"
-	cd ${SRCTOP}/sys/netpfil/pf; \
-	${INSTALL} -C ${TAG_ARGS} -o ${BINOWN} -g ${BINGRP} -m 444 *.h \
-	    ${SDESTDIR}${INCLUDEDIR}/netpfil/pf
-.endif
 	cd ${SRCTOP}/sys/crypto; \
 	${INSTALL} -C ${TAG_ARGS} -o ${BINOWN} -g ${BINGRP} -m 444 rijndael/rijndael.h \
 	    ${SDESTDIR}${INCLUDEDIR}/crypto
@@ -309,20 +299,6 @@ symlinks: .PHONY .META
 		${INSTALL_SYMLINK} ${TAG_ARGS} ../../../../../sys/$i/$$h ${SDESTDIR}${INCLUDEDIR}/$i; \
 	done
 .endfor
-.if ${MK_IPFILTER} != "no"
-	cd ${SRCTOP}/sys/contrib/ipfilter/netinet; \
-	for h in *.h; do \
-		${INSTALL_SYMLINK} ${TAG_ARGS} ../../../sys/contrib/ipfilter/netinet/$$h \
-		    ${SDESTDIR}${INCLUDEDIR}/netinet; \
-	done
-.endif
-.if ${MK_PF} != "no"
-	cd ${SRCTOP}/sys/netpfil/pf; \
-	for h in *.h; do \
-		${INSTALL_SYMLINK} ${TAG_ARGS} ../../../../sys/netpfil/pf/$$h \
-		    ${SDESTDIR}${INCLUDEDIR}/netpfil/pf; \
-	done
-.endif
 	cd ${SRCTOP}/sys/crypto; \
 	for h in rijndael/rijndael.h; do \
 		${INSTALL_SYMLINK} ${TAG_ARGS} ../../../sys/crypto/$$h \

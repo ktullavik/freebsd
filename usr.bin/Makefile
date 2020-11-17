@@ -232,7 +232,6 @@ SUBDIR.${MK_NIS}+=	ypwhich
 SUBDIR.${MK_OPENSSH}+=	ssh-copy-id
 SUBDIR.${MK_OPENSSL}+=	chkey
 SUBDIR.${MK_OPENSSL}+=	newkey
-SUBDIR.${MK_SENDMAIL}+=	vacation
 SUBDIR.${MK_TESTS_SUPPORT}.${MK_CXX}+=	kyua
 SUBDIR.${MK_TESTS}+=	tests
 SUBDIR.${MK_TEXTPROC}+=	ul

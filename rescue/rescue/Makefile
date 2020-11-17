@@ -107,11 +107,6 @@ CRUNCH_PROGS_sbin+= ping6
 CRUNCH_PROGS_sbin+= rtsol
 .endif
 
-.if ${MK_IPFILTER} != "no"
-CRUNCH_PROGS_sbin+= ipf
-CRUNCH_LIBS_ipf+=	${LIBIPF}
-.endif
-
 .if ${MK_ROUTED} != "no"
 CRUNCH_PROGS_sbin+= routed rtquery
 .endif

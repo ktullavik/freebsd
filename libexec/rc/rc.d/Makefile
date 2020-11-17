@@ -204,14 +204,6 @@ HASTPACKAGE=	hast
 CONFS+=		inetd
 .endif
 
-.if ${MK_IPFILTER} != "no"
-CONFS+=	ipfilter \
-	ipfs \
-	ipmon \
-	ipnat \
-	ippool
-.endif
-
 .if ${MK_IPFW} != "no"
 CONFS+=		ipfw
 .if ${MK_NETGRAPH} != "no"
@@ -278,18 +270,8 @@ SSH=		sshd
 SSHPACKAGE=	ssh
 .endif
 
-.if ${MK_PF} != "no"
-CONFS+=		ftp-proxy
-.endif
-
 .if ${MK_ROUTED} != "no"
 CONFS+=		routed
-.endif
-
-.if ${MK_SENDMAIL} != "no"
-CONFGROUPS+=	SMRCD
-SMRCD=		sendmail
-SMRCDPACKAGE=	sendmail
 .endif
 
 .if ${MK_UNBOUND} != "no"

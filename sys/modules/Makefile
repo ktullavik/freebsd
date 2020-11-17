@@ -467,10 +467,6 @@ _ipfw_nat64=	ipfw_nat64
 _ipfw_nptv6=	ipfw_nptv6
 .endif
 
-.if ${MK_IPFILTER} != "no" || defined(ALL_MODULES)
-_ipfilter=	ipfilter
-.endif
-
 .if ${MK_ISCSI} != "no" || defined(ALL_MODULES)
 SUBDIR+=	cfiscsi
 SUBDIR+=	iscsi
@@ -520,15 +516,6 @@ _vmware=	vmware
 
 .if ${MK_NETGRAPH} != "no" || defined(ALL_MODULES)
 _netgraph=	netgraph
-.endif
-
-.if (${MK_PF} != "no" && (${MK_INET_SUPPORT} != "no" || \
-	${MK_INET6_SUPPORT} != "no")) || defined(ALL_MODULES)
-_pf=		pf
-_pflog=		pflog
-.if ${MK_INET_SUPPORT} != "no"
-_pfsync=	pfsync
-.endif
 .endif
 
 .if ${MK_SOURCELESS_UCODE} != "no"
