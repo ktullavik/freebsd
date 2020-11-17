@@ -68,7 +68,4 @@ SYMLINKS+=lib${LIB}.so ${LIBDIR}/libpthread.so
 SYMLINKS+=lib${LIB}_p.a ${LIBDIR}/libpthread_p.a
 .endif
 
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
-
 .include <bsd.lib.mk>
