@@ -202,7 +202,6 @@ SUBDIR.${MK_EE}+=	ee
 SUBDIR.${MK_FILE}+=	file
 SUBDIR.${MK_FINGER}+=	finger
 SUBDIR.${MK_FTP}+=	ftp
-SUBDIR.${MK_GAMES}+=	grdc
 SUBDIR.${MK_GAMES}+=	primes
 SUBDIR.${MK_GAMES}+=	random
 .if ${COMPILER_FEATURES:Mc++11}
