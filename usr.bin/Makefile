@@ -202,7 +202,6 @@ SUBDIR.${MK_EE}+=	ee
 SUBDIR.${MK_FILE}+=	file
 SUBDIR.${MK_FINGER}+=	finger
 SUBDIR.${MK_FTP}+=	ftp
-SUBDIR.${MK_GAMES}+=	primes
 .if ${COMPILER_FEATURES:Mc++11}
 SUBDIR+=	dtc
 .endif
@@ -225,7 +224,6 @@ SUBDIR.${MK_LDNS_UTILS}+=	host
 SUBDIR.${MK_LIB32}+=	ldd32
 SUBDIR.${MK_LOCATE}+=	locate
 # XXX msgs?
-SUBDIR.${MK_MAIL}+=	biff
 SUBDIR.${MK_MAIL}+=	from
 SUBDIR.${MK_MAIL}+=	mail
 SUBDIR.${MK_MAIL}+=	msgs
