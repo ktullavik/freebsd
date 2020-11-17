@@ -19,9 +19,6 @@ LIBADD=		netbsd md util
 LINKS=		${BINDIR}/mtree ${BINDIR}/nmtree
 MLINKS=		mtree.8 nmtree.8
 
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
-
 .if defined(BOOTSTRAPPING)
 # Linux glibc has a dummy lchmod that always fails. Don't fail due to
 # the linker warning that it emits.
