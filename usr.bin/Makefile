@@ -8,7 +8,6 @@ SUBDIR=	alias \
 	asa \
 	awk \
 	backlight \
-	banner \
 	basename \
 	brandelf \
 	bsdcat \
@@ -203,10 +202,6 @@ SUBDIR.${MK_EE}+=	ee
 SUBDIR.${MK_FILE}+=	file
 SUBDIR.${MK_FINGER}+=	finger
 SUBDIR.${MK_FTP}+=	ftp
-SUBDIR.${MK_GAMES}+=	fortune
-SUBDIR.${MK_GAMES}+=	grdc
-SUBDIR.${MK_GAMES}+=	primes
-SUBDIR.${MK_GAMES}+=	random
 .if ${COMPILER_FEATURES:Mc++11}
 SUBDIR+=	dtc
 .endif
@@ -228,11 +223,6 @@ SUBDIR.${MK_LDNS_UTILS}+=	drill
 SUBDIR.${MK_LDNS_UTILS}+=	host
 SUBDIR.${MK_LIB32}+=	ldd32
 SUBDIR.${MK_LOCATE}+=	locate
-# XXX msgs?
-SUBDIR.${MK_MAIL}+=	biff
-SUBDIR.${MK_MAIL}+=	from
-SUBDIR.${MK_MAIL}+=	mail
-SUBDIR.${MK_MAIL}+=	msgs
 SUBDIR.${MK_MAKE}+=	bmake
 SUBDIR.${MK_MAN_UTILS}+=	man
 SUBDIR.${MK_NETCAT}+=	nc

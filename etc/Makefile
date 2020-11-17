@@ -66,15 +66,6 @@ distribution:
 		dot.k5login ${DESTDIR}/root/.k5login;
 .endif
 
-.if ${MK_MAIL} != "no"
-	cd ${.CURDIR}/mail; ${INSTALL} -o ${BINOWN} -g ${BINGRP} -m 644 \
-	    -T "package=runtime" ${ETCMAIL} ${DESTDIR}/etc/mail
-	if [ -d ${DESTDIR}/etc/mail -a -f ${DESTDIR}/etc/mail/aliases -a \
-	      ! -f ${DESTDIR}/etc/aliases ]; then \
-		${INSTALL_SYMLINK} -T "package=runtime" \
-		mail/aliases ${DESTDIR}/etc/aliases; \
-	fi
-.endif
 .if ${MK_LOCATE} != "no"
 	${INSTALL} -o nobody -g ${BINGRP} -m 644 -T "package=runtime"\
 	    /dev/null ${DESTDIR}/var/db/locate.database

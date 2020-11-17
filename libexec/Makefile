@@ -56,10 +56,6 @@ _phttpget=	phttpget
 SUBDIR+=	ftpd
 .endif
 
-.if ${MK_MAIL} != "no"
-_comsat=	comsat
-.endif
-
 .if ${MK_DMAGENT} != "no"
 _dma=		dma
 .endif
