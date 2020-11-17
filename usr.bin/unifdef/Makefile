@@ -7,7 +7,4 @@ PROG=	unifdef
 SCRIPTS=unifdefall.sh
 MLINKS=	unifdef.1 unifdefall.1
 
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
-
 .include <bsd.prog.mk>
