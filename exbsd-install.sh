@@ -65,3 +65,12 @@ echo "zfs_load=yes" >> /${tgtpool}/boot/loader.conf
 echo "hostname=\"${tgthost}\"" >> /${tgtpool}/etc/rc.conf
 
 
+# Setup fstab
+# Swap does not work when booting into the system, because /dev/gpt is not present.
+# I suspect bug due to diskid and zpool root on the same disk.
+#echo "# Device          Mountpoint    FStype    Options    Dump    Pass" >> /${tgtpool}/etc/fstab
+#echo "/dev/gpt/swap0    none          swap      sw         0       0"    >> /${tgtpool}/etc/fstab
+
+
+
+
