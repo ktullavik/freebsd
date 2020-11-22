@@ -72,6 +72,7 @@ __FBSDID("$FreeBSD$");
 #include <sys/sdt.h>
 #include <sys/shm.h>
 #include <sys/sem.h>
+#include <sys/timers.h>
 #include <sys/umtx.h>
 #ifdef KTRACE
 #include <sys/ktrace.h>
@@ -324,6 +325,8 @@ exit1(struct thread *td, int rval, int signo)
 		mtx_unlock(&ppeers_lock);
 	}
 
+	itimers_exit(p);
+
 	/*
 	 * Check if any loadable modules need anything done at process exit.
 	 * E.g. SYSV IPC stuff.
@@ -367,6 +370,7 @@ exit1(struct thread *td, int rval, int signo)
 	 * Close open files and release open-file table.
 	 * This may block!
 	 */
+	pdescfree(td);
 	fdescfree(td);
 
 	/*
