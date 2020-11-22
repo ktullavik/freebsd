@@ -112,6 +112,10 @@ CLEANFILES= ioctl.c ioctl.c.tmp tables.h
 CPP+=	-m32
 .endif
 
+.if ${MK_PF} != "no"
+CFLAGS+=-DPF
+.endif
+
 # Workaround duplicate declarations in <netinet/ip_compat.h>
 CFLAGS.gcc.ioctl.c+= -Wno-redundant-decls
 
@@ -127,7 +131,7 @@ tables.h: mktables
 ioctl.c.tmp: .PHONY
 .endif
 ioctl.c.tmp: mkioctls .META
-	env CPP="${CPP}" \
+	env CPP="${CPP}" MK_PF="${MK_PF}" \
 	    /bin/sh ${.CURDIR}/mkioctls ${SYSROOT:U${DESTDIR}}${INCLUDEDIR} > ${.TARGET}
 
 ioctl.c: ioctl.c.tmp

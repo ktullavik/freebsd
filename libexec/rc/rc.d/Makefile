@@ -266,6 +266,10 @@ SSH=		sshd
 SSHPACKAGE=	ssh
 .endif
 
+.if ${MK_PF} != "no"
+CONFS+=		ftp-proxy
+.endif
+
 .if ${MK_ROUTED} != "no"
 CONFS+=		routed
 .endif

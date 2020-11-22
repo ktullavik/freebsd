@@ -22,6 +22,10 @@ CONFS+=	500.ipfwdenied \
 	550.ipfwlimit
 .endif
 
+.if ${MK_PF} != "no"
+CONFS+=	520.pfdenied
+.endif
+
 .if ${MK_INETD} != "no" && ${MK_TCP_WRAPPERS} != "no"
 CONFS+=	900.tcpwrap
 .endif

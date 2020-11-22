@@ -153,6 +153,7 @@ __DEFAULT_YES_OPTIONS = \
     OFED \
     OPENSSL \
     PAM \
+    PF \
     PKGBOOTSTRAP \
     PMC \
     PPP \

@@ -17,6 +17,10 @@ SUBDIR=	\
 SUBDIR+=snmp_hast
 .endif
 
+.if ${MK_PF} != "no"
+SUBDIR+=snmp_pf
+.endif
+
 .if ${MK_NETGRAPH_SUPPORT} != "no"
 SUBDIR+=snmp_netgraph
 .endif

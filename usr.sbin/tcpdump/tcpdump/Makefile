@@ -198,6 +198,12 @@ CFLAGS+= -I${SYSROOT:U${DESTDIR}}/usr/include/openssl
 CFLAGS+= -DHAVE_LIBCRYPTO -DHAVE_OPENSSL_EVP_H
 .endif
 
+.if ${MK_PF} != "no"
+SRCS+=	print-pflog.c \
+	print-pfsync.c
+CFLAGS+= -DHAVE_NET_PFVAR_H -DHAVE_NET_IF_PFLOG_H
+.endif
+
 version.c: ${TCPDUMP_DISTDIR}/VERSION
 	rm -f version.c ; \
 	    sed 's/.*/char version[] = "&";/' ${TCPDUMP_DISTDIR}/VERSION \
