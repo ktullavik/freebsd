@@ -13,7 +13,6 @@ TESTS_SUBDIRS+=		${_cddl}
 TESTS_SUBDIRS+=		devrandom
 TESTS_SUBDIRS+=		fifo
 TESTS_SUBDIRS+=		file
-TESTS_SUBDIRS+=		fs
 TESTS_SUBDIRS+=		geom
 TESTS_SUBDIRS+=		mac
 TESTS_SUBDIRS+=		mqueue
