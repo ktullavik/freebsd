@@ -209,7 +209,6 @@ SUBDIR+=	dtc
 SUBDIR+=		gh-bc
 .else
 SUBDIR.${MK_OPENSSL}+=	bc
-SUBDIR.${MK_OPENSSL}+=	dc
 .endif
 SUBDIR.${MK_HESIOD}+=	hesinfo
 SUBDIR.${MK_ICONV}+=	iconv
