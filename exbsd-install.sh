@@ -72,5 +72,10 @@ echo "hostname=\"${tgthost}\"" >> /${tgtpool}/etc/rc.conf
 #echo "/dev/gpt/swap0    none          swap      sw         0       0"    >> /${tgtpool}/etc/fstab
 
 
+# Copy sources over
+echo "Copying sources..."
+cp -R /source/ /${tgtpool}/source/
+
+
 
 
