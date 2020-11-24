@@ -408,9 +408,6 @@ SUBDIR+=gnu include
 .if ${MK_KERBEROS} != "no"
 SUBDIR+=kerberos5
 .endif
-.if ${MK_RESCUE} != "no"
-SUBDIR+=rescue
-.endif
 SUBDIR+=sbin
 .if ${MK_CRYPT} != "no"
 SUBDIR+=secure
@@ -1282,22 +1279,6 @@ __installcheck_UGID: .PHONY
 		false; \
 	fi
 .endfor
-.endif
-#
-# If installing over the running system (DESTDIR is / or unset) and the install
-# includes rescue, try running rescue from the objdir as a sanity check.  If
-# rescue is not functional (e.g., because it depends on a system call not
-# supported by the currently running kernel), abort the installation.
-#
-.if !make(distributeworld) && ${MK_RESCUE} != "no" && \
-    (empty(DESTDIR) || ${DESTDIR} == "/") && empty(BYPASS_INSTALLCHECK_SH)
-_installcheck_world: __installcheck_sh_check
-__installcheck_sh_check: .PHONY
-	@if [ "`${OBJTOP}/rescue/rescue/rescue sh -c 'echo OK'`" != \
-	    OK ]; then \
-		echo "rescue/sh check failed, installation aborted" >&2; \
-		false; \
-	fi
 .endif
 
 #
@@ -2490,10 +2471,6 @@ ${_bt}-sbin/md5: ${_bt}-lib/libmd
 _share=	share/syscons/scrnmaps
 .endif
 
-.if ${MK_RESCUE} != "no"
-# rescue includes programs that have build-tools targets
-_rescue=rescue/rescue
-.endif
 
 .if ${MK_TCSH} != "no"
 _tcsh=bin/csh
@@ -2521,7 +2498,6 @@ _bt_clean=	${CLEANDIR}
     ${_jevents} \
     lib/ncurses/ncurses \
     lib/ncurses/ncursesw \
-    ${_rescue} \
     ${_share} \
     usr.bin/awk \
     ${_libmagic} \
@@ -3351,7 +3327,7 @@ XDEV_CPUTYPE?=${TARGET_CPUTYPE}
 
 NOFUN=-DNO_FSCHG -DNO_LINT \
 	MK_MAN=no MK_NLS=no MK_PROFILE=no \
-	MK_KERBEROS=no MK_RESCUE=no MK_TESTS=no MK_WARNS=no \
+	MK_KERBEROS=no MK_TESTS=no MK_WARNS=no \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
 	CPUTYPE=${XDEV_CPUTYPE}
 
