@@ -54,6 +54,8 @@ static const char prom3[] = "Chan %d [%u] PortID 0x%06x Departed because of %s";
 
 static void isp_freeze_loopdown(ispsoftc_t *, int);
 static void isp_loop_changed(ispsoftc_t *isp, int chan);
+static void isp_rq_check_above(ispsoftc_t *);
+static void isp_rq_check_below(ispsoftc_t *);
 static d_ioctl_t ispioctl;
 static void isp_poll(struct cam_sim *);
 static callout_func_t isp_watchdog;
@@ -119,17 +121,12 @@ isp_attach_chan(ispsoftc_t *isp, struct cam_devq *devq, int chan)
 	if (sim == NULL)
 		return (ENOMEM);
 
-	ISP_LOCK(isp);
 	if (xpt_bus_register(sim, isp->isp_dev, chan) != CAM_SUCCESS) {
-		ISP_UNLOCK(isp);
 		cam_sim_free(sim, FALSE);
 		return (EIO);
 	}
-	ISP_UNLOCK(isp);
 	if (xpt_create_path(&path, NULL, cam_sim_path(sim), CAM_TARGET_WILDCARD, CAM_LUN_WILDCARD) != CAM_REQ_CMP) {
-		ISP_LOCK(isp);
 		xpt_bus_deregister(cam_sim_path(sim));
-		ISP_UNLOCK(isp);
 		cam_sim_free(sim, FALSE);
 		return (ENXIO);
 	}
@@ -166,9 +163,7 @@ isp_attach_chan(ispsoftc_t *isp, struct cam_devq *devq, int chan)
 	if (kproc_create(isp_kthread, fc, &fc->kproc, 0, 0,
 	    "%s_%d", device_get_nameunit(isp->isp_osinfo.dev), chan)) {
 		xpt_free_path(fc->path);
-		ISP_LOCK(isp);
 		xpt_bus_deregister(cam_sim_path(fc->sim));
-		ISP_UNLOCK(isp);
 		cam_sim_free(fc->sim, FALSE);
 		return (ENOMEM);
 	}
@@ -283,9 +278,7 @@ unwind:
 		ISP_GET_PC(isp, chan, sim, sim);
 		ISP_GET_PC(isp, chan, path, path);
 		xpt_free_path(path);
-		ISP_LOCK(isp);
 		xpt_bus_deregister(cam_sim_path(sim));
-		ISP_UNLOCK(isp);
 		cam_sim_free(sim, FALSE);
 	}
 	cam_simq_free(isp->isp_osinfo.devq);
@@ -347,6 +340,36 @@ isp_unfreeze_loopdown(ispsoftc_t *isp, int chan)
 		    "Chan %d Release simq", chan);
 		xpt_release_simq(fc->sim, 1);
 		xpt_release_boot();
+	}
+}
+
+/*
+ * Functions to protect from request queue overflow by freezing SIM queue.
+ * XXX: freezing only one arbitrary SIM, since they all share the queue.
+ */
+static void
+isp_rq_check_above(ispsoftc_t *isp)
+{
+	struct isp_fc *fc = ISP_FC_PC(isp, 0);
+
+	if (isp->isp_rqovf || fc->sim == NULL)
+		return;
+	if (!isp_rqentry_avail(isp, QENTRY_MAX)) {
+		xpt_freeze_simq(fc->sim, 1);
+		isp->isp_rqovf = 1;
+	}
+}
+
+static void
+isp_rq_check_below(ispsoftc_t *isp)
+{
+	struct isp_fc *fc = ISP_FC_PC(isp, 0);
+
+	if (!isp->isp_rqovf || fc->sim == NULL)
+		return;
+	if (isp_rqentry_avail(isp, QENTRY_MAX)) {
+		xpt_release_simq(fc->sim, 0);
+		isp->isp_rqovf = 0;
 	}
 }
 
@@ -655,7 +678,7 @@ static void destroy_lun_state(ispsoftc_t *, int, tstate_t *);
 static void isp_enable_lun(ispsoftc_t *, union ccb *);
 static void isp_disable_lun(ispsoftc_t *, union ccb *);
 static callout_func_t isp_refire_notify_ack;
-static void isp_complete_ctio(union ccb *);
+static void isp_complete_ctio(ispsoftc_t *isp, union ccb *);
 enum Start_Ctio_How { FROM_CAM, FROM_TIMER, FROM_SRR, FROM_CTIO_DONE };
 static void isp_target_start_ctio(ispsoftc_t *, union ccb *, enum Start_Ctio_How);
 static void isp_handle_platform_atio7(ispsoftc_t *, at7_entry_t *);
@@ -733,6 +756,8 @@ isp_tmcmd_restart(ispsoftc_t *isp)
 			isp_target_start_ctio(isp, ccb, FROM_TIMER);
 		}
 	}
+	isp_rq_check_above(isp);
+	isp_rq_check_below(isp);
 }
 
 static atio_private_data_t *
@@ -1308,12 +1333,12 @@ isp_refire_notify_ack(void *arg)
 
 
 static void
-isp_complete_ctio(union ccb *ccb)
+isp_complete_ctio(ispsoftc_t *isp, union ccb *ccb)
 {
-	if ((ccb->ccb_h.status & CAM_STATUS_MASK) != CAM_REQ_INPROG) {
-		ccb->ccb_h.status &= ~CAM_SIM_QUEUED;
-		xpt_done(ccb);
-	}
+
+	isp_rq_check_below(isp);
+	ccb->ccb_h.status &= ~CAM_SIM_QUEUED;
+	xpt_done(ccb);
 }
 
 static void
@@ -1570,7 +1595,7 @@ fail:
 	isp_async(isp, ISPASYNC_TARGET_NOTIFY_ACK, inot);
 	ccb->ccb_h.status &= ~CAM_STATUS_MASK;
 	ccb->ccb_h.status |= CAM_REQ_CMP_ERR;
-	isp_complete_ctio(ccb);
+	isp_complete_ctio(isp, ccb);
 	return;
 mdp:
 	if (isp_notify_ack(isp, inot)) {
@@ -1578,7 +1603,7 @@ mdp:
 		goto fail;
 	}
 	ccb->ccb_h.status &= ~CAM_STATUS_MASK;
-	ccb->ccb_h.status = CAM_MESSAGE_RECV;
+	ccb->ccb_h.status |= CAM_MESSAGE_RECV;
 	/*
 	 * This is not a strict interpretation of MDP, but it's close
 	 */
@@ -1591,7 +1616,7 @@ mdp:
 	ccb->csio.msg_ptr[4] = srr_off >> 16;
 	ccb->csio.msg_ptr[5] = srr_off >> 8;
 	ccb->csio.msg_ptr[6] = srr_off;
-	isp_complete_ctio(ccb);
+	isp_complete_ctio(isp, ccb);
 }
 
 
@@ -1718,7 +1743,7 @@ isp_handle_platform_ctio(ispsoftc_t *isp, ct7_entry_t *ct)
 	 *
 	 * 24XX cards never need an ATIO put back.
 	 */
-	isp_complete_ctio(ccb);
+	isp_complete_ctio(isp, ccb);
 }
 
 static int
@@ -2475,6 +2500,7 @@ isp_action(struct cam_sim *sim, union ccb *ccb)
 			break;
 		}
 		error = isp_start((XS_T *) ccb);
+		isp_rq_check_above(isp);
 		switch (error) {
 		case 0:
 			ccb->ccb_h.status |= CAM_SIM_QUEUED;
@@ -2497,7 +2523,7 @@ isp_action(struct cam_sim *sim, union ccb *ccb)
 		case CMD_EAGAIN:
 			isp_free_pcmd(isp, ccb);
 			cam_freeze_devq(ccb->ccb_h.path);
-			cam_release_devq(ccb->ccb_h.path, RELSIM_RELEASE_AFTER_TIMEOUT, 0, 100, 0);
+			cam_release_devq(ccb->ccb_h.path, RELSIM_RELEASE_AFTER_TIMEOUT, 0, 10, 0);
 			ccb->ccb_h.status = CAM_REQUEUE_REQ;
 			xpt_done(ccb);
 			break;
@@ -2589,6 +2615,7 @@ isp_action(struct cam_sim *sim, union ccb *ccb)
 	}
 	case XPT_CONT_TARGET_IO:
 		isp_target_start_ctio(isp, ccb, FROM_CAM);
+		isp_rq_check_above(isp);
 		break;
 #endif
 	case XPT_RESET_DEV:		/* BDR the specified SCSI device */
@@ -2877,6 +2904,7 @@ isp_done(XS_T *sccb)
 			callout_stop(&PISP_PCMD(sccb)->wdog);
 		isp_free_pcmd(isp, (union ccb *) sccb);
 	}
+	isp_rq_check_below(isp);
 	xpt_done((union ccb *) sccb);
 }
 
@@ -3222,10 +3250,7 @@ isp_async(ispsoftc_t *isp, ispasync_t cmd, ...)
 		mbox1 = ISP_READ(isp, OUTMAILBOX1);
 		isp_prt(isp, ISP_LOGERR, "Internal Firmware Error @ RISC Address 0x%x", mbox1);
 #if 0
-		mbox1 = isp->isp_osinfo.mbox_sleep_ok;
-		isp->isp_osinfo.mbox_sleep_ok = 0;
 		isp_reinit(isp, 1);
-		isp->isp_osinfo.mbox_sleep_ok = mbox1;
 		isp_async(isp, ISPASYNC_FW_RESTARTED, NULL);
 #endif
 		break;
@@ -3329,64 +3354,6 @@ isp_nanotime_sub(struct timespec *b, struct timespec *a)
 	if (elapsed == 0)
 		elapsed++;
 	return (elapsed);
-}
-
-int
-isp_mbox_acquire(ispsoftc_t *isp)
-{
-	if (isp->isp_osinfo.mboxbsy) {
-		return (1);
-	} else {
-		isp->isp_osinfo.mboxcmd_done = 0;
-		isp->isp_osinfo.mboxbsy = 1;
-		return (0);
-	}
-}
-
-void
-isp_mbox_wait_complete(ispsoftc_t *isp, mbreg_t *mbp)
-{
-	u_int t, to;
-
-	to = (mbp->timeout == 0) ? MBCMD_DEFAULT_TIMEOUT : mbp->timeout;
-	if (isp->isp_osinfo.mbox_sleep_ok) {
-		isp->isp_osinfo.mbox_sleep_ok = 0;
-		isp->isp_osinfo.mbox_sleeping = 1;
-		msleep_sbt(&isp->isp_osinfo.mboxcmd_done, &isp->isp_lock,
-		    PRIBIO, "ispmbx_sleep", to * SBT_1US, 0, 0);
-		isp->isp_osinfo.mbox_sleep_ok = 1;
-		isp->isp_osinfo.mbox_sleeping = 0;
-	} else {
-		for (t = 0; t < to; t += 100) {
-			if (isp->isp_osinfo.mboxcmd_done)
-				break;
-			ISP_RUN_ISR(isp);
-			if (isp->isp_osinfo.mboxcmd_done)
-				break;
-			ISP_DELAY(100);
-		}
-	}
-	if (isp->isp_osinfo.mboxcmd_done == 0) {
-		isp_prt(isp, ISP_LOGWARN, "%s Mailbox Command (0x%x) Timeout (%uus) (%s:%d)",
-		    isp->isp_osinfo.mbox_sleep_ok? "Interrupting" : "Polled",
-		    isp->isp_lastmbxcmd, to, mbp->func, mbp->lineno);
-		mbp->param[0] = MBOX_TIMEOUT;
-		isp->isp_osinfo.mboxcmd_done = 1;
-	}
-}
-
-void
-isp_mbox_notify_done(ispsoftc_t *isp)
-{
-	isp->isp_osinfo.mboxcmd_done = 1;
-	if (isp->isp_osinfo.mbox_sleeping)
-		wakeup(&isp->isp_osinfo.mboxcmd_done);
-}
-
-void
-isp_mbox_release(ispsoftc_t *isp)
-{
-	isp->isp_osinfo.mboxbsy = 0;
 }
 
 int
