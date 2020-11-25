@@ -1,4 +1,4 @@
-
+set -e
 
 # Gather parameters
 echo "Installing ReBSD"
@@ -57,25 +57,18 @@ make installworld DESTDIR=/${tgtpool}
 mergemaster -i -m /source -D /${tgtpool}
 
 
-# Set loader config
-echo "zfs_load=yes" >> /${tgtpool}/boot/loader.conf
-
-
 # Set hostname
 echo "hostname=\"${tgthost}\"" >> /${tgtpool}/etc/rc.conf
 
 
 # Setup fstab
-# Swap does not work when booting into the system, because /dev/gpt is not present.
-# I suspect bug due to diskid and zpool root on the same disk.
-#echo "# Device          Mountpoint    FStype    Options    Dump    Pass" >> /${tgtpool}/etc/fstab
-#echo "/dev/gpt/swap0    none          swap      sw         0       0"    >> /${tgtpool}/etc/fstab
+echo "# Device          Mountpoint    FStype    Options    Dump    Pass" >> /${tgtpool}/etc/fstab
+echo "/dev/gpt/swap0    none          swap      sw         0       0"    >> /${tgtpool}/etc/fstab
 
 
 # Copy sources over
 echo "Copying sources..."
 cp -R /source/ /${tgtpool}/source/
-
 
 
 
