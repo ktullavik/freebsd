@@ -2237,22 +2237,6 @@ _cat=		bin/cat
 _bootstrap_tools_links+=cat
 .endif
 
-# r277259 crunchide: Correct 64-bit section header offset
-# r281674 crunchide: always include both 32- and 64-bit ELF support
-.if ${BOOTSTRAPPING} < 1100078
-_crunchide=	usr.sbin/crunch/crunchide
-.else
-_bootstrap_tools_links+=crunchide
-.endif
-
-# 1300115: Higher WARNS fixes
-.if ${BOOTSTRAPPING} < 1202502 || \
-	(${BOOTSTRAPPING} > 1300000 && ${BOOTSTRAPPING} < 1300115)
-_crunchgen=	usr.sbin/crunch/crunchgen
-.else
-_bootstrap_tools_links+=crunchgen
-.endif
-
 # r296926 -P keymap search path, MFC to stable/10 in r298297
 # Note: kbdcontrol can not be bootstrapped on non-FreeBSD systems
 .if !defined(CROSSBUILD_HOST)
@@ -2437,8 +2421,6 @@ bootstrap-tools: ${_bt}-links .PHONY
     ${_gensnmptree} \
     ${_config} \
     ${_flua} \
-    ${_crunchide} \
-    ${_crunchgen} \
     ${_nmtree} \
     ${_vtfontcvt} \
     ${_localedef} \

@@ -17,8 +17,6 @@ DIRDEPS = \
 	usr.bin/xinstall \
 	usr.bin/yacc \
 	usr.sbin/config \
-	usr.sbin/crunch/crunchgen \
-	usr.sbin/crunch/crunchide \
 
 
 .if ${MK_KERBEROS} != "no"
