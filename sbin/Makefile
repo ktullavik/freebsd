@@ -13,7 +13,6 @@ SUBDIR=adjkerntz \
 	dhclient \
 	dmesg \
 	dump \
-	dumpfs \
 	dumpon \
 	etherswitchcfg \
 	ffsinfo \

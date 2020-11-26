@@ -60,7 +60,6 @@ DIRDEPS+= \
 	sbin/dhclient \
 	sbin/dmesg \
 	sbin/dump \
-	sbin/dumpfs \
 	sbin/dumpon \
 	sbin/etherswitchcfg \
 	sbin/ffsinfo \
