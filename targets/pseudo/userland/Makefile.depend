@@ -67,7 +67,6 @@ DIRDEPS+= \
 	sbin/fsck \
 	sbin/fsck_ffs \
 	sbin/fsck_msdosfs \
-	sbin/fsdb \
 	sbin/fsirand \
 	sbin/gbde \
 	sbin/geom/core \

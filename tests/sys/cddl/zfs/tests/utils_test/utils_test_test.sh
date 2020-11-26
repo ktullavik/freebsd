@@ -78,32 +78,6 @@ utils_test_002_pos_cleanup()
 }
 
 
-atf_test_case utils_test_003_pos cleanup
-utils_test_003_pos_head()
-{
-	atf_set "descr" "Ensure that the fsdb(1M) utility fails on a ZFS file system."
-	atf_set "require.progs"  fsdb
-}
-utils_test_003_pos_body()
-{
-	. $(atf_get_srcdir)/../../include/default.cfg
-	. $(atf_get_srcdir)/utils_test.kshlib
-	. $(atf_get_srcdir)/utils_test.cfg
-
-	verify_disk_count "$DISKS" 1
-	ksh93 $(atf_get_srcdir)/setup.ksh || atf_fail "Setup failed"
-	ksh93 $(atf_get_srcdir)/utils_test_003_pos.ksh || atf_fail "Testcase failed"
-}
-utils_test_003_pos_cleanup()
-{
-	. $(atf_get_srcdir)/../../include/default.cfg
-	. $(atf_get_srcdir)/utils_test.kshlib
-	. $(atf_get_srcdir)/utils_test.cfg
-
-	ksh93 $(atf_get_srcdir)/cleanup.ksh || atf_fail "Cleanup failed"
-}
-
-
 atf_test_case utils_test_004_pos cleanup
 utils_test_004_pos_head()
 {
@@ -266,7 +240,6 @@ atf_init_test_cases()
 
 	atf_add_test_case utils_test_001_pos
 	atf_add_test_case utils_test_002_pos
-	atf_add_test_case utils_test_003_pos
 	atf_add_test_case utils_test_004_pos
 	atf_add_test_case utils_test_005_pos
 	atf_add_test_case utils_test_006_pos
