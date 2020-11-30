@@ -2,6 +2,7 @@
 .\" SPDX-License-Identifier: BSD-2-Clause-FreeBSD
 .\"
 .\" Copyright 2020 Scott Long
+.\" Copyright 2020 Stefan Eßer
 .\"
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -26,7 +27,7 @@
 .\"
 .\" $FreeBSD$
 .\"
-.Dd Oct 28, 2020
+.Dd November 18, 2020
 .Dt GETLOCALBASE 3
 .Os
 .Sh NAME
@@ -36,8 +37,8 @@
 .Lb libutil
 .Sh SYNOPSIS
 .In libutil.h
-.Ft ssize_t
-.Fn getlocalbase "char *path" "size_t len"
+.Ft const char*
+.Fn getlocalbase "void"
 .Sh DESCRIPTION
 The
 .Fn getlocalbase
@@ -48,35 +49,31 @@ directory.
 First the
 .Ev LOCALBASE
 environment variable is checked.
-If that doesn't exist then the
+If that does not exist then the
 .Va user.localbase
 sysctl is checked.
-If that also doesn't exist then the value of the
+If that also does not exist then the value of the
 .Dv _PATH_LOCALBASE
 compile-time variable is used.
 If that is undefined then the default of
 .Pa /usr/local
 is used.
 .Pp
-The
-.Fa path
-argument points to a caller-supplied buffer to hold the resulting pathname.
-The
-.Fa len
-argument is the length of the caller-supplied buffer.
+The value returned by the
+.Fn getlocalbase
+function shall not be modified.
 .Sh IMPLEMENTATION NOTES
 Calls to
-.Fn getlocalpath
+.Fn getlocalbase
 will perform a setugid check on the running binary before checking the
 environment.
 .Sh RETURN VALUES
-If the request completes without error, the size of the string copied into the
-buffer, including the terminating NUL, is returned.
-If an error occurred or the buffer was too small to hold the string,
+The
 .Fn getlocalbase
-returns -1 and sets
-.Em errno
-to indicate the error condition.
+function always succeeds and returns a pointer to a string, whose length
+may exceed MAXPATHLEN if it has been derived from the environment variable
+LOCALBASE.
+No length checks are performed on the result.
 .Sh ENVIRONMENT
 The
 .Fn getlocalbase
@@ -86,15 +83,7 @@ environment variable.
 .Sh ERRORS
 The
 .Fn getlocalbase
-function will fail and set
-.Va errno
-for the following conditions:
-.Bl -tag -width Er
-.It Bq Er EINVAL
-One of the passed in parameters is NULL or zero.
-.It Bq Er ENOMEM
-There isn't enough space in the passed in buffer to hold the pathname string.
-.El
+function always succeeds.
 .Sh SEE ALSO
 .Xr env 1 ,
 .Xr src.conf 5 ,
@@ -107,4 +96,4 @@ library function first appeared in
 .Sh AUTHORS
 This
 manual page was written by
-.An Scott Long Aq Mt scottl@FreeBSD.org .
+.An Scott Long Aq Mt scottl@FreeBSD.org and Stefan Eßer Aq Mt se@FreeBSD.org .

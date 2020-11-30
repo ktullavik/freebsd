@@ -1,7 +1,7 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause
  *
- * Copyright 2020 Scott Long <scottl@freebsd.org>
+ * Copyright 2020 Stefan Eßer <se@freebsd.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,62 +28,47 @@
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD$");
 
-#include <sys/types.h>
-#include <sys/errno.h>
+#include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/limits.h>
 #include <stdlib.h>
 #include <paths.h>
 #include <libutil.h>
-#include <string.h>
 #include <unistd.h>
 
-ssize_t
-getlocalbase(char *path, size_t pathlen)
-{
-	ssize_t tmplen;
-	const char *tmppath;
-
-	if ((pathlen == 0) || (path == NULL)) {
-		errno = EINVAL;
-		return (-1);
-	}
-
-	/* It's unlikely that the buffer would be this big */
-	if (pathlen > SSIZE_MAX) {
-		errno = ENOMEM;
-		return (-1);
-	}
-
-	tmppath = NULL;
-	tmplen = (size_t)pathlen;
-	if (issetugid() == 0)
-		tmppath = getenv("LOCALBASE");
-
-	if ((tmppath == NULL) &&
-	    (sysctlbyname("user.localbase", path, (size_t *)&tmplen, NULL,
-	    0) == 0)) {
-		return (tmplen);
-	}
-
-	if (tmppath == NULL)
-#ifdef _PATH_LOCALBASE
-		tmppath = _PATH_LOCALBASE;
-#else
-		tmppath = "/usr/local";
+#ifndef _PATH_LOCALBASE
+#define _PATH_LOCALBASE "/usr/local"
 #endif
 
-	tmplen = strlcpy(path, tmppath, pathlen);
-	if ((tmplen < 0) || (tmplen >= (ssize_t)pathlen)) {
-		errno = ENOMEM;
-		return (-1);
-	}
+const char *
+getlocalbase(void)
+{
+	static const int localbase_oid[2] = {CTL_USER, USER_LOCALBASE};
+	char *tmppath;
+	size_t tmplen;
+	static const char *localbase = NULL;
 
-	/* It's unlikely that the buffer would be this big */
-	if (tmplen > SSIZE_MAX) {
-		errno = ENOMEM;
-		return (-1);
+	if (issetugid() == 0) {
+		tmppath = getenv("LOCALBASE");
+		if (tmppath != NULL && tmppath[0] != '\0')
+			return (tmppath);
 	}
-
-	return ((ssize_t)tmplen);
+	if (sysctl(localbase_oid, 2, NULL, &tmplen, NULL, 0) == 0 &&
+	    (tmppath = malloc(tmplen)) != NULL && 
+	    sysctl(localbase_oid, 2, tmppath, &tmplen, NULL, 0) == 0) {
+		/*
+		 * Check for some other thread already having 
+		 * set localbase - this should use atomic ops.
+		 * The amount of memory allocated above may leak,
+		 * if a parallel update in another thread is not
+		 * detected and the non-NULL pointer is overwritten.
+		 */
+		if (tmppath[0] != '\0' &&
+		    (volatile const char*)localbase == NULL)
+			localbase = tmppath;
+		else
+			free((void*)tmppath);
+		return (localbase);
+	}
+	return (_PATH_LOCALBASE);
 }

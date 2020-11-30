@@ -64,7 +64,6 @@ TESTS_SUBDIRS+=	threadsappend
 TESTS_SUBDIRS+=	truncate
 TESTS_SUBDIRS+=	txg_integrity
 TESTS_SUBDIRS+=	userquota
-TESTS_SUBDIRS+=	utils_test
 TESTS_SUBDIRS+=	write_dirs
 # Not yet ported to FreeBSD
 # TESTS_SUBDIRS+=	xattr

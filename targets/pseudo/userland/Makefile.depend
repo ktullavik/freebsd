@@ -60,14 +60,12 @@ DIRDEPS+= \
 	sbin/dhclient \
 	sbin/dmesg \
 	sbin/dump \
-	sbin/dumpfs \
 	sbin/dumpon \
 	sbin/etherswitchcfg \
 	sbin/ffsinfo \
 	sbin/fsck \
 	sbin/fsck_ffs \
 	sbin/fsck_msdosfs \
-	sbin/fsdb \
 	sbin/fsirand \
 	sbin/gbde \
 	sbin/geom/core \
@@ -522,8 +520,6 @@ DIRDEPS+= \
 	usr.sbin/cron/cron \
 	usr.sbin/cron/crontab \
 	usr.sbin/cron/lib \
-	usr.sbin/crunch/crunchgen \
-	usr.sbin/crunch/crunchide \
 	usr.sbin/ctladm \
 	usr.sbin/ctld \
 	usr.sbin/ctm/ctm \

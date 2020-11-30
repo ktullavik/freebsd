@@ -37,7 +37,6 @@ SUBDIR=	adduser \
 	iostat \
 	iovctl \
 	kldxref \
-	mailwrapper \
 	makefs \
 	memcontrol \
 	mergemaster \
@@ -186,13 +185,9 @@ SUBDIR.${MK_PMC}+=	pmc
 .endif
 SUBDIR.${MK_PMC}+=	pmcannotate pmccontrol pmcstat pmcstudy
 SUBDIR.${MK_PPP}+=	ppp
-SUBDIR.${MK_QUOTAS}+=	edquota
-SUBDIR.${MK_QUOTAS}+=	quotaon
-SUBDIR.${MK_QUOTAS}+=	repquota
 SUBDIR.${MK_TCP_WRAPPERS}+=	tcpdchk
 SUBDIR.${MK_TCP_WRAPPERS}+=	tcpdmatch
 SUBDIR.${MK_TOOLCHAIN}+=	config
-SUBDIR.${MK_TOOLCHAIN}+=	crunch
 SUBDIR.${MK_UNBOUND}+=	unbound
 SUBDIR.${MK_USB}+=	uathload
 SUBDIR.${MK_USB}+=	uhsoctl

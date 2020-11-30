@@ -212,7 +212,6 @@ SUBDIR.${MK_OPENMP}+=	libomp
 SUBDIR.${MK_OPENSSL}+=	libmp
 SUBDIR.${MK_PMC}+=	libpmc libpmcstat
 SUBDIR.${MK_RADIUS_SUPPORT}+=	libradius
-SUBDIR.${MK_SENDMAIL}+=	libmilter libsm libsmdb libsmutil
 SUBDIR.${MK_TESTS_SUPPORT}+=	atf
 SUBDIR.${MK_TESTS_SUPPORT}.${MK_CXX}+=	kyua
 SUBDIR.${MK_TESTS_SUPPORT}.${MK_CXX}+=	liblutok

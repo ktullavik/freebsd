@@ -5,7 +5,6 @@
 
 SUBDIR=adjkerntz \
 	camcontrol \
-	clri \
 	comcontrol \
 	conscontrol \
 	ddb \
@@ -14,14 +13,12 @@ SUBDIR=adjkerntz \
 	dhclient \
 	dmesg \
 	dump \
-	dumpfs \
 	dumpon \
 	etherswitchcfg \
 	ffsinfo \
 	fsck \
 	fsck_ffs \
 	fsck_msdosfs \
-	fsdb \
 	fsirand \
 	gbde \
 	geom \
@@ -73,9 +70,7 @@ SUBDIR.${MK_CCD}+=	ccdconfig
 SUBDIR.${MK_CXX}+=	devd
 SUBDIR.${MK_HAST}+=	hastctl
 SUBDIR.${MK_HAST}+=	hastd
-SUBDIR.${MK_INET6}+=	ping6
 SUBDIR.${MK_INET6}+=	rtsol
-SUBDIR.${MK_IPFILTER}+=	ipf
 SUBDIR.${MK_IPFW}+=	ipfw
 SUBDIR.${MK_IPFW}+=	natd
 SUBDIR.${MK_ISCSI}+=	iscontrol
@@ -83,7 +78,6 @@ SUBDIR.${MK_NVME}+=	nvmecontrol
 SUBDIR.${MK_OPENSSL}+=	decryptcore
 SUBDIR.${MK_PF}+=	pfctl
 SUBDIR.${MK_PF}+=	pflogd
-SUBDIR.${MK_QUOTAS}+=	quotacheck
 SUBDIR.${MK_ROUTED}+=	routed
 SUBDIR.${MK_VERIEXEC}+=	veriexec
 SUBDIR.${MK_ZFS}+=	bectl

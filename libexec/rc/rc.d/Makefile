@@ -204,14 +204,6 @@ HASTPACKAGE=	hast
 CONFS+=		inetd
 .endif
 
-.if ${MK_IPFILTER} != "no"
-CONFS+=	ipfilter \
-	ipfs \
-	ipmon \
-	ipnat \
-	ippool
-.endif
-
 .if ${MK_IPFW} != "no"
 CONFS+=		ipfw
 .if ${MK_NETGRAPH} != "no"
@@ -252,10 +244,6 @@ VAR_HEMIDAL=	/var/heimdal
 VAR_HEMIDAL_MODE=	700
 .endif
 
-.if ${MK_MAIL} != "no"
-CONFS+=		othermta
-.endif
-
 .if ${MK_NS_CACHING} != "no"
 _nscd=		nscd
 .endif
@@ -284,12 +272,6 @@ CONFS+=		ftp-proxy
 
 .if ${MK_ROUTED} != "no"
 CONFS+=		routed
-.endif
-
-.if ${MK_SENDMAIL} != "no"
-CONFGROUPS+=	SMRCD
-SMRCD=		sendmail
-SMRCDPACKAGE=	sendmail
 .endif
 
 .if ${MK_UNBOUND} != "no"

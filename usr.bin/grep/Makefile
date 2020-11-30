@@ -65,7 +65,4 @@ CFLAGS+=	-DWITH_GNU_COMPAT
 LIBADD+=	regex
 .endif
 
-HAS_TESTS=
-SUBDIR.${MK_TESTS}+= tests
-
 .include <bsd.prog.mk>

@@ -48,20 +48,8 @@ SUBDIR+=	bootpd
 SUBDIR+=	fingerd
 .endif
 
-.if ${MK_FREEBSD_UPDATE} != "no"
-_phttpget=	phttpget
-.endif
-
 .if ${MK_FTP} != "no"
 SUBDIR+=	ftpd
-.endif
-
-.if ${MK_MAIL} != "no"
-_comsat=	comsat
-.endif
-
-.if ${MK_DMAGENT} != "no"
-_dma=		dma
 .endif
 
 .if ${MK_NIS} != "no"
@@ -73,10 +61,6 @@ _ypxfr=		ypxfr
 _pppoed=	pppoed
 .endif
 
-.if ${MK_PF} != "no"
-_tftp-proxy=	tftp-proxy
-.endif
-
 .if !defined(NO_PIC) && !defined(NO_RTLD)
 _rtld-elf=	rtld-elf
 SUBDIR.${MK_LIB32}+=	rtld-elf32
@@ -84,11 +68,6 @@ SUBDIR.${MK_LIB32}+=	rtld-elf32
 
 .if ${MK_RBOOTD} != "no"
 SUBDIR+=	rbootd
-.endif
-
-.if ${MK_SENDMAIL} != "no"
-_mail.local=	mail.local
-_smrsh=		smrsh
 .endif
 
 .if ${MK_MAN_UTILS} != "no"

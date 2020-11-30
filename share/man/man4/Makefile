@@ -130,6 +130,7 @@ MAN=	aac.4 \
 	ddb.4 \
 	devctl.4 \
 	disc.4 \
+	disk.4 \
 	divert.4 \
 	${_dpms.4} \
 	ds1307.4 \
@@ -249,6 +250,7 @@ MAN=	aac.4 \
 	kld.4 \
 	ksyms.4 \
 	ksz8995ma.4 \
+	ktls.4 \
 	ktr.4 \
 	kue.4 \
 	lagg.4 \
@@ -445,6 +447,7 @@ MAN=	aac.4 \
 	rl.4 \
 	rndtest.4 \
 	route.4 \
+	rtsx.4 \
 	rtwn.4 \
 	rtwnfw.4 \
 	rtwn_pci.4 \

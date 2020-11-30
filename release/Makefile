@@ -183,9 +183,8 @@ disc1: packagesystem
 	mkdir -p ${.TARGET}
 	cd ${WORLDDIR} && ${IMAKE} installkernel installworld distribution \
 	    DESTDIR=${.OBJDIR}/${.TARGET} MK_AT=no \
-	    MK_INSTALLLIB=no MK_LIB32=no MK_MAIL=no \
-	    MK_TOOLCHAIN=no MK_PROFILE=no \
-	    MK_RESCUE=no MK_DICT=no \
+	    MK_INSTALLLIB=no MK_LIB32=no \
+	    MK_TOOLCHAIN=no MK_PROFILE=no MK_DICT=no \
 	    MK_KERNEL_SYMBOLS=no MK_TESTS=no MK_DEBUG_FILES=no \
 	    -DDB_FROM_SRC
 # Copy distfiles
@@ -212,10 +211,8 @@ bootonly: packagesystem
 	mkdir -p ${.TARGET}
 	cd ${WORLDDIR} && ${IMAKE} installkernel installworld distribution \
 	    DESTDIR=${.OBJDIR}/${.TARGET} MK_AT=no \
-	    MK_GAMES=no \
-	    MK_INSTALLLIB=no MK_LIB32=no MK_MAIL=no \
-	    MK_TOOLCHAIN=no MK_PROFILE=no \
-	    MK_RESCUE=no MK_DICT=no \
+	    MK_INSTALLLIB=no MK_LIB32=no \
+	    MK_TOOLCHAIN=no MK_PROFILE=no MK_DICT=no \
 	    MK_KERNEL_SYMBOLS=no MK_TESTS=no MK_DEBUG_FILES=no \
 	    -DDB_FROM_SRC
 # Copy manifest only (no distfiles) to get checksums
@@ -238,7 +235,7 @@ dvd: packagesystem
 # Install system
 	mkdir -p ${.TARGET}
 	cd ${WORLDDIR} && ${IMAKE} installkernel installworld distribution \
-		DESTDIR=${.OBJDIR}/${.TARGET} MK_RESCUE=no MK_KERNEL_SYMBOLS=no \
+		DESTDIR=${.OBJDIR}/${.TARGET} MK_KERNEL_SYMBOLS=no \
 		MK_TESTS=no MK_DEBUG_FILES=no \
 		-DDB_FROM_SRC
 # Copy distfiles

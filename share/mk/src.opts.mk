@@ -98,13 +98,10 @@ __DEFAULT_YES_OPTIONS = \
     FDT \
     FILE \
     FINGER \
-    FLOPPY \
     FMTREE \
     FORTH \
     FP_LIBC \
-    FREEBSD_UPDATE \
     FTP \
-    GAMES \
     GDB \
     GH_BC \
     GNU_DIFF \
@@ -112,13 +109,11 @@ __DEFAULT_YES_OPTIONS = \
     GOOGLETEST \
     GPIO \
     HAST \
-    HTML \
     HYPERV \
     ICONV \
     INET \
     INET6 \
     INETD \
-    IPFILTER \
     IPFW \
     ISCSI \
     JAIL \
@@ -146,11 +141,9 @@ __DEFAULT_YES_OPTIONS = \
     LPR \
     LS_COLORS \
     LZMA_SUPPORT \
-    MAIL \
     MAILWRAPPER \
     MAKE \
     MLX5TOOL \
-    NDIS \
     NETCAT \
     NETGRAPH \
     NLS_CATALOGS \
@@ -164,12 +157,10 @@ __DEFAULT_YES_OPTIONS = \
     PKGBOOTSTRAP \
     PMC \
     PPP \
-    QUOTAS \
     RADIUS_SUPPORT \
     RBOOTD \
     RESCUE \
     ROUTED \
-    SENDMAIL \
     SERVICESDB \
     SETUID_LOGIN \
     SHARED_TOOLCHAIN \
@@ -178,14 +169,11 @@ __DEFAULT_YES_OPTIONS = \
     SOURCELESS_HOST \
     SOURCELESS_UCODE \
     STATS \
-    SVNLITE \
     SYSCONS \
     SYSTEM_COMPILER \
     SYSTEM_LINKER \
-    TALK \
     TCP_WRAPPERS \
     TCSH \
-    TELNET \
     TEXTPROC \
     TFTP \
     UNBOUND \
@@ -417,16 +405,6 @@ MK_TESTS:=	no
 MK_BSDINSTALL:=	no
 .endif
 
-.if ${MK_FILE} == "no"
-MK_SVNLITE:=	no
-.endif
-
-.if ${MK_MAIL} == "no"
-MK_MAILWRAPPER:= no
-MK_SENDMAIL:=	no
-MK_DMAGENT:=	no
-.endif
-
 .if ${MK_NETGRAPH} == "no"
 MK_ATM:=	no
 MK_BLUETOOTH:=	no
@@ -451,10 +429,6 @@ MK_WIRELESS:=		no
 .if ${MK_LDNS} == "no"
 MK_LDNS_UTILS:=	no
 MK_UNBOUND:= no
-.endif
-
-.if ${MK_PF} == "no"
-MK_AUTHPF:=	no
 .endif
 
 .if ${MK_OFED} == "no"

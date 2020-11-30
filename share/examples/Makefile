@@ -105,10 +105,6 @@ SE_FLUA=	libjail.lua
 SE_DIRS+=	indent
 SE_INDENT=	indent.pro
 
-.if ${MK_IPFILTER} != "no"
-SUBDIR+=	ipfilter
-.endif
-
 SE_DIRS+=	ipfw
 SE_IPFW=	change_rules.sh
 

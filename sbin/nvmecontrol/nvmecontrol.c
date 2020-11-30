@@ -179,17 +179,13 @@ get_nsid(int fd, char **ctrlr_str, uint32_t *nsid)
 int
 main(int argc, char *argv[])
 {
-	char locallib[MAXPATHLEN];
-	size_t len;
+	static char dir[MAXPATHLEN];
 
 	cmd_init();
 
-	snprintf(locallib, MAXPATHLEN, "/lib/nvmecontrol");
-	cmd_load_dir(locallib, NULL, NULL);
-	if ((len = getlocalbase(locallib, MAXPATHLEN)) > 0) {
-		strlcat(locallib, "/lib/nvmecontrol", MAXPATHLEN);
-		cmd_load_dir(locallib, NULL, NULL);
-	}
+	cmd_load_dir("/lib/nvmecontrol", NULL, NULL);
+	snprintf(dir, MAXPATHLEN, "%s/lib/nvmecontrol", getlocalbase());
+	cmd_load_dir(dir, NULL, NULL);
 
 	cmd_dispatch(argc, argv, NULL);
 

@@ -26,8 +26,4 @@ CONFS+=		pf.conf
 CONFS+=		ppp.conf
 .endif
 
-.if ${MK_SENDMAIL} != "no"
-CONFS+=		sendmail.conf
-.endif
-
 .include <bsd.prog.mk>

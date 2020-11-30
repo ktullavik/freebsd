@@ -316,6 +316,7 @@ SUBDIR=	\
 	re \
 	rl \
 	${_rockchip} \
+	rtsx \
 	rtwn \
 	rtwn_pci \
 	rtwn_usb \
@@ -465,10 +466,6 @@ _ipfw_nat64=	ipfw_nat64
 
 .if ${MK_INET6_SUPPORT} != "no" || defined(ALL_MODULES)
 _ipfw_nptv6=	ipfw_nptv6
-.endif
-
-.if ${MK_IPFILTER} != "no" || defined(ALL_MODULES)
-_ipfilter=	ipfilter
 .endif
 
 .if ${MK_ISCSI} != "no" || defined(ALL_MODULES)

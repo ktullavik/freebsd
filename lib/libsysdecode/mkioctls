@@ -27,6 +27,7 @@ ioctl_includes=$(
 	if [ "${MK_PF}" = "no" ]; then
 		filter='egrep -v (net/pfvar|net/if_pfsync)\.h'
 	fi
+
 	# find -s would avoid the need to invoke sort but it is non-portable
 	find -L ./* -type f -name '*.h' | \
 		LC_ALL=C sort | \

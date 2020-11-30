@@ -20,8 +20,12 @@
 #	LOCAL_LIB_DIRS="list of dirs" to add additional dirs to libraries target
 #	LOCAL_MTREE="list of mtree files" to process to allow local directories
 #	    to be created before files are installed
+#	LOCAL_LEGACY_DIRS="list of dirs" to add additional dirs to the legacy
+#	    target
+#	LOCAL_BSTOOL_DIRS="list of dirs" to add additional dirs to the
+#	    bootstrap-tools target
 #	LOCAL_TOOL_DIRS="list of dirs" to add additional dirs to the build-tools
-#	    list
+#	    target
 #	LOCAL_XTOOL_DIRS="list of dirs" to add additional dirs to the
 #	    cross-tools target
 #	METALOG="path to metadata log" to write permission and ownership
@@ -404,9 +408,6 @@ SUBDIR+=gnu include
 .if ${MK_KERBEROS} != "no"
 SUBDIR+=kerberos5
 .endif
-.if ${MK_RESCUE} != "no"
-SUBDIR+=rescue
-.endif
 SUBDIR+=sbin
 .if ${MK_CRYPT} != "no"
 SUBDIR+=secure
@@ -725,7 +726,7 @@ BSARGS= 	DESTDIR= \
 		BOOTSTRAPPING=${BOOTSTRAPPING_OSRELDATE} \
 		BWPHASE=${.TARGET:C,^_,,} \
 		SSP_CFLAGS= \
-		MK_HTML=no NO_LINT=yes MK_MAN=no MK_MAN_UTILS=yes \
+		NO_LINT=yes MK_MAN=no MK_MAN_UTILS=yes \
 		-DNO_PIC MK_PROFILE=no -DNO_SHARED \
 		-DNO_CPU_CFLAGS MK_WARNS=no MK_CTF=no \
 		MK_CLANG_EXTRAS=no MK_CLANG_FORMAT=no MK_CLANG_FULL=no \
@@ -774,7 +775,7 @@ KTMAKE=		\
 		MAKEOBJDIRPREFIX= \
 		BOOTSTRAPPING=${BOOTSTRAPPING_OSRELDATE} \
 		SSP_CFLAGS= \
-		MK_HTML=no -DNO_LINT MK_MAN=no \
+		-DNO_LINT MK_MAN=no \
 		-DNO_PIC MK_PROFILE=no -DNO_SHARED \
 		-DNO_CPU_CFLAGS MK_RETPOLINE=no MK_WARNS=no MK_CTF=no
 
@@ -1121,7 +1122,7 @@ _libraries:
 	@echo ">>> stage 4.2: building libraries"
 	@echo "--------------------------------------------------------------"
 	${_+_}cd ${.CURDIR}; \
-	    ${WMAKE} -DNO_FSCHG MK_HTML=no -DNO_LINT MK_MAN=no \
+	    ${WMAKE} -DNO_FSCHG -DNO_LINT MK_MAN=no \
 	    MK_PROFILE=no MK_TESTS=no MK_TESTS_SUPPORT=${MK_TESTS_SUPPORT} \
 	    libraries
 everything: .PHONY
@@ -1278,22 +1279,6 @@ __installcheck_UGID: .PHONY
 		false; \
 	fi
 .endfor
-.endif
-#
-# If installing over the running system (DESTDIR is / or unset) and the install
-# includes rescue, try running rescue from the objdir as a sanity check.  If
-# rescue is not functional (e.g., because it depends on a system call not
-# supported by the currently running kernel), abort the installation.
-#
-.if !make(distributeworld) && ${MK_RESCUE} != "no" && \
-    (empty(DESTDIR) || ${DESTDIR} == "/") && empty(BYPASS_INSTALLCHECK_SH)
-_installcheck_world: __installcheck_sh_check
-__installcheck_sh_check: .PHONY
-	@if [ "`${OBJTOP}/rescue/rescue/rescue sh -c 'echo OK'`" != \
-	    OK ]; then \
-		echo "rescue/sh check failed, installation aborted" >&2; \
-		false; \
-	fi
 .endif
 
 #
@@ -1591,6 +1576,10 @@ KERNCONF=${KERNFAST}
 .endif
 .if ${TARGET_ARCH} == "powerpc64"
 KERNCONF?=	GENERIC64
+.elif ${TARGET_ARCH} == "powerpc64le"
+KERNCONF?=	GENERIC64LE
+.elif ${TARGET_ARCH} == "powerpcspe"
+KERNCONF?=	MPC85XXSPE
 .else
 KERNCONF?=	GENERIC
 .endif
@@ -2123,7 +2112,9 @@ legacy: .PHONY
 	false
 .endif
 
-.for _tool in tools/build
+.for _tool in \
+  tools/build \
+  ${LOCAL_LEGACY_DIRS}
 	${_+_}@${ECHODIR} "===> ${_tool} (obj,includes,all,install)"; \
 	    cd ${.CURDIR}/${_tool}; \
 	    if [ -z "${NO_OBJWALK}" ]; then ${MAKE} DIRPRFX=${_tool}/ obj; fi; \
@@ -2175,10 +2166,6 @@ BOOTSTRAPPING_OSRELDATE:=	0
 # bootstrap-tool.
 _config=usr.sbin/config lib/libnv lib/libsbuf
 ${_bt}-usr.sbin/config: ${_bt}-lib/libnv ${_bt}-lib/libsbuf
-
-.if ${MK_GAMES} != "no"
-_strfile=	usr.bin/fortune/strfile
-.endif
 
 .if ${MK_VT} != "no"
 _vtfontcvt=	usr.bin/vtfontcvt
@@ -2248,22 +2235,6 @@ _bootstrap_tools_links+=mtree
 _cat=		bin/cat
 .else
 _bootstrap_tools_links+=cat
-.endif
-
-# r277259 crunchide: Correct 64-bit section header offset
-# r281674 crunchide: always include both 32- and 64-bit ELF support
-.if ${BOOTSTRAPPING} < 1100078
-_crunchide=	usr.sbin/crunch/crunchide
-.else
-_bootstrap_tools_links+=crunchide
-.endif
-
-# 1300115: Higher WARNS fixes
-.if ${BOOTSTRAPPING} < 1202502 || \
-	(${BOOTSTRAPPING} > 1300000 && ${BOOTSTRAPPING} < 1300115)
-_crunchgen=	usr.sbin/crunch/crunchgen
-.else
-_bootstrap_tools_links+=crunchgen
 .endif
 
 # r296926 -P keymap search path, MFC to stable/10 in r298297
@@ -2450,11 +2421,10 @@ bootstrap-tools: ${_bt}-links .PHONY
     ${_gensnmptree} \
     ${_config} \
     ${_flua} \
-    ${_crunchide} \
-    ${_crunchgen} \
     ${_nmtree} \
     ${_vtfontcvt} \
-    ${_localedef}
+    ${_localedef} \
+    ${LOCAL_BSTOOL_DIRS}
 ${_bt}-${_tool}: ${_bt}-links .PHONY .MAKE
 	${_+_}@${ECHODIR} "===> ${_tool} (obj,all,install)"; \
 		cd ${.CURDIR}/${_tool}; \
@@ -2483,10 +2453,6 @@ ${_bt}-sbin/md5: ${_bt}-lib/libmd
 _share=	share/syscons/scrnmaps
 .endif
 
-.if ${MK_RESCUE} != "no"
-# rescue includes programs that have build-tools targets
-_rescue=rescue/rescue
-.endif
 
 .if ${MK_TCSH} != "no"
 _tcsh=bin/csh
@@ -2514,7 +2480,6 @@ _bt_clean=	${CLEANDIR}
     ${_jevents} \
     lib/ncurses/ncurses \
     lib/ncurses/ncursesw \
-    ${_rescue} \
     ${_share} \
     usr.bin/awk \
     ${_libmagic} \
@@ -2719,7 +2684,6 @@ NXBMAKEARGS+= \
 	MK_CTF=no \
 	MK_DEBUG_FILES=no \
 	MK_GDB=no \
-	MK_HTML=no \
 	MK_LLDB=no \
 	MK_MAN=no \
 	MK_MAN_UTILS=yes \
@@ -2727,8 +2691,6 @@ NXBMAKEARGS+= \
 	MK_OPENSSH=no \
 	MK_PROFILE=no \
 	MK_RETPOLINE=no \
-	MK_SENDMAIL=no \
-	MK_SVNLITE=no \
 	MK_TESTS=no \
 	MK_WARNS=no \
 	MK_ZFS=no
@@ -2926,9 +2888,7 @@ lib/liblzma__L: lib/libmd__L lib/libthr__L
 lib/libzstd__L: lib/libthr__L
 
 _generic_libs=	${_cddl_lib} gnu/lib ${_kerberos5_lib} lib ${_secure_lib}
-.if ${MK_IPFILTER} != "no"
-_generic_libs+=	sbin/ipf/libipf
-.endif
+
 .for _DIR in ${LOCAL_LIB_DIRS}
 .if ${_DIR} == ".WAIT"  || (empty(_generic_libs:M${_DIR}) && exists(${.CURDIR}/${_DIR}/Makefile))
 _generic_libs+= ${_DIR}
@@ -3347,9 +3307,9 @@ XDEV_CPUTYPE?=${CPUTYPE}
 XDEV_CPUTYPE?=${TARGET_CPUTYPE}
 .endif
 
-NOFUN=-DNO_FSCHG MK_HTML=no -DNO_LINT \
+NOFUN=-DNO_FSCHG -DNO_LINT \
 	MK_MAN=no MK_NLS=no MK_PROFILE=no \
-	MK_KERBEROS=no MK_RESCUE=no MK_TESTS=no MK_WARNS=no \
+	MK_KERBEROS=no MK_TESTS=no MK_WARNS=no \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
 	CPUTYPE=${XDEV_CPUTYPE}
 

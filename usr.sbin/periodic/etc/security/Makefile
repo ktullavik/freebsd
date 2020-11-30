@@ -17,11 +17,6 @@ DATAMODE=	444
 
 # NB: keep these sorted by MK_* knobs
 
-.if ${MK_IPFILTER} != "no"
-CONFS+=	510.ipfdenied
-CONFS+=	610.ipf6denied
-.endif
-
 .if ${MK_IPFW} != "no"
 CONFS+=	500.ipfwdenied \
 	550.ipfwlimit
