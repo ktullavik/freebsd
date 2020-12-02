@@ -171,7 +171,6 @@ SUBDIR=	\
 	${_ioat} \
         ${_ipoib} \
 	${_ipdivert} \
-	${_ipfilter} \
 	${_ipfw} \
 	ipfw_nat \
 	${_ipfw_nat64} \
