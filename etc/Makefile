@@ -100,7 +100,7 @@ MTREES+=	../${mtree}			/
 .endfor
 
 
-distrib-dirs: ${MTREES:N/*} distrib-cleanup .PHONY
+distrib-dirs: ${MTREES:N/*} .PHONY
 .for _m _d in ${MTREES}
 	@m=${.CURDIR}/${_m}; \
 	d=${DESTDIR}${_d}; \
