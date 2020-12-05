@@ -43,10 +43,6 @@ _blacklistd-helper+=	blacklistd-helper
 SUBDIR+=	bootpd
 .endif
 
-.if ${MK_FINGER} != "no"
-SUBDIR+=	fingerd
-.endif
-
 .if ${MK_FTP} != "no"
 SUBDIR+=	ftpd
 .endif

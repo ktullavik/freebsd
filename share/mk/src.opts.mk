@@ -97,7 +97,6 @@ __DEFAULT_YES_OPTIONS = \
     EXAMPLES \
     FDT \
     FILE \
-    FINGER \
     FMTREE \
     FORTH \
     FP_LIBC \
