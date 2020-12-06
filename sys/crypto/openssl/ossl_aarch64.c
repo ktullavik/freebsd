@@ -1,7 +1,10 @@
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
- * Copyright 2018 Emmanuel Vadot <manu@FreeBSD.org>
+ * Copyright (c) 2020 The FreeBSD Foundation
+ *
+ * This software was developed by Mitchell Horne <mhorne@FreeBSD.org>
+ * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -15,7 +18,7 @@
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
@@ -27,42 +30,33 @@
  * $FreeBSD$
  */
 
-#ifndef _RK_CLK_PLL_H_
-#define _RK_CLK_PLL_H_
+#include <sys/types.h>
 
-#include <dev/extres/clk/clk.h>
+#include <machine/elf.h>
+#include <machine/md_var.h>
 
-struct rk_clk_pll_rate {
-	uint32_t	freq;
-	uint32_t	refdiv;
-	uint32_t	fbdiv;
-	uint32_t	postdiv1;
-	uint32_t	postdiv2;
-	uint32_t	dsmpd;
-	uint32_t	frac;
-	uint32_t	bwadj;
-};
+#include <crypto/openssl/ossl.h>
+#include <crypto/openssl/aarch64/arm_arch.h>
 
-struct rk_clk_pll_def {
-	struct clknode_init_def	clkdef;
-	uint32_t		base_offset;
+/*
+ * Feature bits defined in arm_arch.h
+ */
+unsigned int OPENSSL_armcap_P;
 
-	uint32_t		gate_offset;
-	uint32_t		gate_shift;
+void
+ossl_cpuid(void)
+{
+	/* SHA features */
+	if ((elf_hwcap & HWCAP_SHA1) != 0)
+		OPENSSL_armcap_P |= ARMV8_SHA1;
+	if ((elf_hwcap & HWCAP_SHA2) != 0)
+		OPENSSL_armcap_P |= ARMV8_SHA256;
+	if ((elf_hwcap & HWCAP_SHA512) != 0)
+		OPENSSL_armcap_P |= ARMV8_SHA512;
 
-	uint32_t		mode_reg;
-	uint32_t		mode_shift;
-
-	uint32_t		flags;
-
-	struct rk_clk_pll_rate	*rates;
-	struct rk_clk_pll_rate	*frac_rates;
-};
-
-#define	RK_CLK_PLL_HAVE_GATE	0x1
-
-int rk3066_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef);
-int rk3328_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef);
-int rk3399_clk_pll_register(struct clkdom *clkdom, struct rk_clk_pll_def *clkdef);
-
-#endif /* _RK_CLK_PLL_H_ */
+	/* AES features */
+	if ((elf_hwcap & HWCAP_AES) != 0)
+		OPENSSL_armcap_P |= ARMV8_AES;
+	if ((elf_hwcap & HWCAP_PMULL) != 0)
+		OPENSSL_armcap_P |= ARMV8_PMULL;
+}
