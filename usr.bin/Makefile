@@ -179,7 +179,6 @@ SUBDIR=	alias \
 	whereis \
 	which \
 	whois \
-	write \
 	xargs \
 	xinstall \
 	xo \
