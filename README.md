@@ -8,11 +8,11 @@
 
   * Trade flexibility, legacy and compatibility for simplicity.
 
-  * Redesign the file system hierarchy, focusing on the unwitting, lazy minded,\
+  * Redesign the file system hierarchy, focusing on the unwitting and lazy minded,\
     and those who like it clean.
 
   * Introduce modern languages. Deprecate C++. Replace usage of sh and make for\
-    elaborate systems.
+    implementing elaborate systems.
 
   * A single and highly integrated desktop environment.
 
