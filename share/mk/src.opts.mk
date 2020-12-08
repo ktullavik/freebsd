@@ -105,7 +105,6 @@ __DEFAULT_YES_OPTIONS = \
     GH_BC \
     GNU_DIFF \
     GNU_GREP \
-    GOOGLETEST \
     GPIO \
     HAST \
     HYPERV \
@@ -297,14 +296,6 @@ BROKEN_OPTIONS+=LIB32
 .if ${__T} != "armv6" && ${__T} != "armv7"
 BROKEN_OPTIONS+=LIBSOFT
 .endif
-.if ${__T:Mmips*}
-# GOOGLETEST cannot currently be compiled on mips due to external circumstances.
-# Notably, the freebsd-gcc port isn't linking in libgcc so we end up trying ot
-# link to a hidden symbol. LLVM would successfully link this in, but some of
-# the mips variants are broken under LLVM until LLVM 10. GOOGLETEST should be
-# marked no longer broken with the switch to LLVM.
-BROKEN_OPTIONS+=GOOGLETEST SSP
-.endif
 # EFI doesn't exist on mips or powerpc.
 .if ${__T:Mmips*} || ${__T:Mpowerpc*}
 BROKEN_OPTIONS+=EFI
@@ -395,7 +386,6 @@ MK_KERBEROS_SUPPORT:=	no
 
 .if ${MK_CXX} == "no"
 MK_CLANG:=	no
-MK_GOOGLETEST:=	no
 MK_TESTS:=	no
 .endif
 
@@ -435,10 +425,6 @@ MK_OFED_EXTRA:=	no
 
 .if ${MK_TESTS} == "no"
 MK_DTRACE_TESTS:= no
-.endif
-
-.if ${MK_TESTS_SUPPORT} == "no"
-MK_GOOGLETEST:=	no
 .endif
 
 .if ${MK_ZONEINFO} == "no"

@@ -453,8 +453,6 @@ When set, it enforces these options:
 .It
 .Va WITHOUT_DTRACE_TESTS
 .It
-.Va WITHOUT_GOOGLETEST
-.It
 .Va WITHOUT_LLVM_COV
 .It
 .Va WITHOUT_TESTS
@@ -678,22 +676,6 @@ Set to not build GNU
 Set this option to include GNU extensions in
 .Xr bsdgrep 1
 by linking against libgnuregex.
-.It Va WITHOUT_GOOGLETEST
-Set to neither build nor install
-.Lb libgmock ,
-.Lb libgtest ,
-and dependent tests.
-.Pp
-This is a default setting on
-mips/mips and mips/mips64.
-.It Va WITH_GOOGLETEST
-Set to build and install
-.Lb libgmock ,
-.Lb libgtest ,
-and dependent tests.
-.Pp
-This is a default setting on
-amd64/amd64, arm/armv6, arm/armv7, arm64/aarch64, i386/i386, powerpc/powerpc, powerpc/powerpc64, riscv/riscv64 and riscv/riscv64sf.
 .It Va WITHOUT_GPIO
 Set to not build
 .Xr gpioctl 8

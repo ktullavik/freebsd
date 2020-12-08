@@ -10,8 +10,6 @@ SUBDIR=	${_dtrace} \
 	${_zfsd} \
 	${_zhack}
 
-SUBDIR.${MK_TESTS}+= tests
-
 .if ${MK_ZFS} != "no"
 .if ${MK_LIBTHR} != "no"
 _zdb=	zdb

@@ -23,10 +23,6 @@ TESTS_SUBDIRS+=	atf
 TESTS_SUBDIRS+=	plain
 TESTS_SUBDIRS+=	tap
 
-.if ${MK_GOOGLETEST} != no
-TESTS_SUBDIRS+= googletest
-.endif
-
 # We leave KYUAFILE unset so that bsd.test.mk auto-generates a Kyuafile
 # for us based on the contents of the TESTS_SUBDIRS line above.  The
 # generated file will tell the tests run-time engine to recurse into the

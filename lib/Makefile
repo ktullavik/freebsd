@@ -111,7 +111,6 @@ SUBDIR=	${SUBDIR_BOOTSTRAP} \
 # libraries, those libraries should be listed as build order dependencies here.
 
 SUBDIR_DEPEND_geom=	libufs
-SUBDIR_DEPEND_googletest= libregex
 SUBDIR_DEPEND_libarchive= libz libbz2 libexpat liblzma libmd libzstd
 SUBDIR_DEPEND_libauditdm= libbsm
 SUBDIR_DEPEND_libbsnmp= ${_libnetgraph}
@@ -188,7 +187,6 @@ _libcplusplus+=	libc++experimental
 .endif
 
 SUBDIR.${MK_EFI}+=	libefivar
-SUBDIR.${MK_GOOGLETEST}+=	googletest
 SUBDIR.${MK_LIBTHR}+=	libthr
 SUBDIR.${MK_NETGRAPH}+=	libnetgraph
 SUBDIR.${MK_NIS}+=	libypclnt

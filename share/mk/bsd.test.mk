@@ -62,7 +62,6 @@ TESTS_ENV+= LD_LIBRARY_PATH=${TESTS_LD_LIBRARY_PATH:tW:C/ +/:/g}
 _TESTS=
 
 # Pull in the definitions of all supported test interfaces.
-.include <googletest.test.mk>
 .include <plain.test.mk>
 .include <tap.test.mk>
 # Include atf last to let other test framework use it
