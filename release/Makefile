@@ -33,7 +33,6 @@
 #  WITH_COMPRESSED_VMIMAGES: if set, compress virtual machine disk images
 #  		with xz(1) (extremely time consuming)
 #  WITH_CLOUDWARE: if set, build cloud hosting disk images with the release
-#  TARGET/TARGET_ARCH: architecture of built release
 #
 
 WORLDDIR?=	${.CURDIR}/..
@@ -41,16 +40,8 @@ PORTSDIR?=	/usr/ports
 DOCDIR?=	/usr/doc
 RELNOTES_LANG?= en_US.ISO8859-1
 
-.if !defined(TARGET) || empty(TARGET)
-TARGET=		${MACHINE}
-.endif
-.if !defined(TARGET_ARCH) || empty(TARGET_ARCH)
-.if ${TARGET} == ${MACHINE}
-TARGET_ARCH=	${MACHINE_ARCH}
-.else
-TARGET_ARCH=	${TARGET}
-.endif
-.endif
+TARGET= amd64
+TARGET_ARCH= amd64
 IMAKE=		${MAKE} TARGET_ARCH=${TARGET_ARCH} TARGET=${TARGET}
 DISTDIR=	dist
 
