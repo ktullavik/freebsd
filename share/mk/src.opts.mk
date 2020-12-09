@@ -102,7 +102,6 @@ __DEFAULT_YES_OPTIONS = \
     FORTH \
     FP_LIBC \
     FTP \
-    GDB \
     GH_BC \
     GNU_DIFF \
     GNU_GREP \
@@ -193,6 +192,7 @@ __DEFAULT_NO_OPTIONS = \
     CLANG_FORMAT \
     DTRACE_TESTS \
     EXPERIMENTAL \
+    GDB \
     HESIOD \
     LIBSOFT \
     LOADER_FIREWIRE \
