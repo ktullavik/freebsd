@@ -124,7 +124,6 @@ SUBDIR=	alias \
 	rpcinfo \
 	rs \
 	rup \
-	ruptime \
 	rusers \
 	script \
 	sdiff \
