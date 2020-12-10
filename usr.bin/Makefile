@@ -127,7 +127,6 @@ SUBDIR=	alias \
 	ruptime \
 	rusers \
 	rwall \
-	rwho \
 	script \
 	sdiff \
 	sed \
