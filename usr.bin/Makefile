@@ -255,9 +255,6 @@ SUBDIR.${MK_VT}+=	vtfontcvt
 SUBDIR.${MK_USB}+=	usbhidaction
 SUBDIR.${MK_USB}+=	usbhidctl
 SUBDIR.${MK_UTMPX}+=	last
-.if ${MK_CXX} != "no"
-SUBDIR.${MK_UTMPX}+=	users
-.endif
 SUBDIR.${MK_UTMPX}+=	who
 SUBDIR.${MK_OFED}+=	ofed
 
