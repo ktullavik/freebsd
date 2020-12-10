@@ -5,7 +5,6 @@
 
 SUBDIR=	alias \
 	apply \
-	asa \
 	awk \
 	backlight \
 	basename \
