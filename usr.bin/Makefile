@@ -32,7 +32,6 @@ SUBDIR=	alias \
 	du \
 	elfctl \
 	elfdump \
-	enigma \
 	env \
 	etdump \
 	expand \
