@@ -66,7 +66,6 @@ SUBDIR=	alias \
 	lam \
 	lastcomm \
 	ldd \
-	leave \
 	less \
 	lessecho \
 	lesskey \
