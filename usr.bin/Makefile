@@ -123,7 +123,6 @@ SUBDIR=	alias \
 	revoke \
 	rpcinfo \
 	rs \
-	rup \
 	rusers \
 	script \
 	sdiff \
