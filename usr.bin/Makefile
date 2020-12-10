@@ -188,7 +188,6 @@ SUBDIR=	alias \
 # NB: keep these sorted by MK_* knobs
 
 SUBDIR.${MK_AT}+=	at
-SUBDIR.${MK_ATM}+=	atm
 SUBDIR.${MK_BLUETOOTH}+=	bluetooth
 SUBDIR.${MK_BSD_CPIO}+=	cpio
 SUBDIR.${MK_CLANG}+=	clang
