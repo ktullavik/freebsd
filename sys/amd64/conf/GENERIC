@@ -131,23 +131,18 @@ device      vmd_bus             # bus for VMD children
 device      atkbdc              # AT keyboard controller
 device      atkbd               # AT keyboard
 device      psm                 # PS/2 mouse
-
 device      kbdmux              # keyboard multiplexer
 
+# Graphics
 device      vga                 # VGA video card driver
 options     VESA                # Add support for VESA BIOS Extensions (VBE)
-
 device      splash              # Splash screen and screen saver support
-
-# syscons is the default console driver, resembling an SCO console
-device      sc
+device      sc                  # Old console driver
 options     SC_PIXEL_MODE       # add support for the raster text mode
-
-# vt is the new video console driver
-device      vt
-device      vt_vga
-device      vt_efifb
-device      vt_vbefb
+device      vt                  # New console driver
+device      vt_vga              #
+device      vt_efifb            # EFI framebuffer
+device      vt_vbefb            # Vesa bios extensions framebuffer
 
 # Serial (COM) ports
 device      uart                # Generic UART driver
