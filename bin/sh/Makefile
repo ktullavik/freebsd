@@ -27,7 +27,7 @@ SRCS= ${SHSRCS} ${GENSRCS} ${GENHDRS}
 
 LIBADD=	edit
 
-CFLAGS+=-DSHELL -I. -I${.CURDIR}
+CFLAGS+=-DSHELL -DNO_HISTORY -DJOBS=0 -I. -I${.CURDIR}
 # for debug:
 # DEBUG_FLAGS+= -g -DDEBUG=2 -fno-inline
 
