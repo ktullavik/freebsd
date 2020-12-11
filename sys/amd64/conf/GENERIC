@@ -35,7 +35,6 @@ options     PROCFS              # Process filesystem (requires PSEUDOFS)
 options     PSEUDOFS            # Pseudo-filesystem framework
 options     TMPFS               # Efficient memory filesystem
 options     GEOM_RAID           # Soft RAID functionality.
-options     GEOM_LABEL          # Provides labelization
 options     EFIRT               # EFI Runtime Services support
 options     COMPAT_FREEBSD9     # Compatible with FreeBSD9
 options     COMPAT_FREEBSD10    # Compatible with FreeBSD10
