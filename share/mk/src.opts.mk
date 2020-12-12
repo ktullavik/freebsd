@@ -204,8 +204,7 @@ __DEFAULT_NO_OPTIONS = \
     REPRODUCIBLE_BUILD \
     RPCBIND_WARMSTART_SUPPORT \
     SORT_THREADS \
-    SVN \
-    ZONEINFO_LEAPSECONDS_SUPPORT \
+    ZONEINFO_LEAPSECONDS_SUPPORT
 
 # LEFT/RIGHT. Left options which default to "yes" unless their corresponding
 # RIGHT option is disabled.
