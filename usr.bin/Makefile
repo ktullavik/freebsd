@@ -188,9 +188,6 @@ SUBDIR.${MK_CLANG}+=	clang
 SUBDIR.${MK_DIALOG}+=	dpv
 SUBDIR.${MK_FILE}+=	file
 SUBDIR.${MK_FTP}+=	ftp
-.if ${COMPILER_FEATURES:Mc++11}
-SUBDIR+=	dtc
-.endif
 .if ${MK_GH_BC} == "yes"
 SUBDIR+=		gh-bc
 .else
