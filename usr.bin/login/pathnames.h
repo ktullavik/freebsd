@@ -34,7 +34,5 @@
 
 #include <paths.h>
 
-#define	_PATH_HUSHLOGIN		".hushlogin"
-#define	_PATH_MOTDFILE		"/var/run/motd"
 #define _PATH_FBTAB		"/etc/fbtab"
 #define _PATH_LOGINDEVPERM	"/etc/logindevperm"

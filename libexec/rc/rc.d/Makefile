@@ -55,7 +55,6 @@ CONFS=	DAEMON \
 	localpkg \
 	lockd \
 	mixer \
-	motd \
 	mountcritlocal \
 	mountcritremote \
 	mountlate \

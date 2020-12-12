@@ -700,18 +700,6 @@ case "${RERUN}" in
     ;;
   esac
 
-  case "${IGNORE_MOTD}" in
-  '') ;;
-  *)
-     echo ''
-     echo "*** You have the IGNORE_MOTD option set in your mergemaster rc file."
-     echo "    This option is deprecated in favor of the IGNORE_FILES option."
-     echo "    Please update your rc file accordingly."
-     echo ''
-     exit 1
-     ;;
-  esac
-
   # Avoid comparing the following user specified files
   for file in ${IGNORE_FILES}; do
     test -e ${TEMPROOT}/${file} && unlink ${TEMPROOT}/${file}
