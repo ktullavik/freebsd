@@ -72,7 +72,6 @@ __DEFAULT_YES_OPTIONS = \
     BSDINSTALL \
     BSNMP \
     BZIP2 \
-    CALENDAR \
     CAPSICUM \
     CAROOT \
     CASPER \
