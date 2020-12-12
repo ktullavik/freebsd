@@ -104,7 +104,6 @@ __DEFAULT_YES_OPTIONS = \
     FTP \
     GH_BC \
     GNU_DIFF \
-    GNU_GREP \
     GPIO \
     HAST \
     HYPERV \
@@ -193,6 +192,7 @@ __DEFAULT_NO_OPTIONS = \
     DTRACE_TESTS \
     EXPERIMENTAL \
     GDB \
+    GNU_GREP \
     HESIOD \
     LIBSOFT \
     LOADER_FIREWIRE \
