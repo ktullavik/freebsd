@@ -88,7 +88,6 @@ __DEFAULT_YES_OPTIONS = \
     CXX \
     CXGBETOOL \
     DIALOG \
-    DICT \
     DMAGENT \
     DYNAMICROOT \
     EE \
