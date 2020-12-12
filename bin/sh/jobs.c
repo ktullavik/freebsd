@@ -120,8 +120,8 @@ static struct job *bgjob = NULL; /* last background process */
 #if JOBS
 static struct job *jobmru;	/* most recently used job list */
 static pid_t initialpgrp;	/* pgrp of shell on invocation */
-#endif
 static int ttyfd = -1;
+#endif
 
 /* mode flags for dowait */
 #define DOWAIT_BLOCK	0x1 /* wait until a child exits */
@@ -154,9 +154,10 @@ static void showjob(struct job *, int);
  * Turn job control on and off.
  */
 
+#if JOBS
 static int jobctl;
 
-#if JOBS
+
 static void
 jobctl_notty(void)
 {
@@ -378,7 +379,9 @@ showjob(struct job *jp, int mode)
 	char statebuf[16];
 	const char *statestr, *coredump;
 	struct procstat *ps;
+	#if JOBS
 	struct job *j;
+	#endif
 	int col, curr, i, jobno, prev, procno, status;
 	char c;
 
@@ -729,8 +732,10 @@ killjob(const char *name, int sig)
 	jp = getjob(name);
 	if (jp->state == JOBDONE)
 		return 0;
+#if JOBS
 	if (jp->jobctl)
 		return kill(-jp->ps[0].pid, sig);
+#endif
 	ret = -1;
 	errno = ESRCH;
 	for (i = 0; i < jp->nprocs; i++)

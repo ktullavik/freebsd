@@ -51,7 +51,7 @@
  */
 
 
-#define	JOBS 1
+#define	JOBS 0
 /* #define DEBUG 1 */
 
 /*
