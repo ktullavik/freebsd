@@ -2405,7 +2405,6 @@ bootstrap-tools: ${_bt}-links .PHONY
     ${_clang_tblgen} \
     ${_kerberos5_bootstrap_tools} \
     ${_strfile} \
-    usr.bin/dtc \
     ${_cat} \
     ${_kbdcontrol} \
     ${_elftoolchain_libs} \
