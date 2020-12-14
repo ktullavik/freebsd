@@ -35,10 +35,6 @@ ACCTMODE=	${BINMODE}
 ACCTPACKAGE=	acct
 .endif
 
-.if ${MK_CALENDAR} != "no"
-CONFS+=	300.calendar
-.endif
-
 .if ${MK_NTP} != "no"
 CONFS+=	480.status-ntpd \
 	480.leapfile-ntpd
