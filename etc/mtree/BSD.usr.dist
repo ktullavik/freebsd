@@ -337,10 +337,6 @@
                 srcs
                 ..
             ..
-            smbfs
-                print
-                ..
-            ..
             sunrpc
                 dir
                 ..
