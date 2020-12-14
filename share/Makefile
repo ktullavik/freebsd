@@ -39,10 +39,6 @@ _snmp=		snmp
 _dtrace=	dtrace
 .endif
 
-.if ${MK_DICT} != "no"
-_dict=		dict
-.endif
-
 .if ${MK_EXAMPLES} != "no"
 _examples=	examples
 .endif
